@@ -1,4 +1,5 @@
 <?php require_once '../../includes/conn.php'; ?>
+<?php include "../../includes/session.start.php" ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,19 +94,20 @@
                                             </td>
                                             <td class="min-width">
                                                 <?php
-                                                $status_color = match ((int)$task['task_status']) {
+                                                $status_color = match ((int) $task['task_status']) {
                                                     1 => "info-btn",
                                                     2 => "active-btn",
                                                     3 => "success-btn",
                                                     4 => "close-btn",
                                                 };
                                                 ?>
-                                                <span class="status-btn <?php echo $status_color; ?>"><?php echo $task['status']; ?></span>
+                                                <span
+                                                    class="status-btn <?php echo $status_color; ?>"><?php echo $task['status']; ?></span>
                                             </td>
                                             <td class="min-width">
                                                 <p>
                                                     <?php
-                                                    if (isset($task['assigned_user_id']) && (int)$task['assigned_user_id'] != 0) {
+                                                    if (isset($task['assigned_user_id']) && (int) $task['assigned_user_id'] != 0) {
                                                         echo $task['full_name'];
                                                     } else {
                                                         echo "None";
@@ -115,14 +117,11 @@
                                             </td>
                                             <td>
                                                 <div class="action">
-                                                    <button class="text-primary">
-                                                        <a href="edit.task.php?task_id=<?php echo $task['task_id']; ?>"
-                                                            class="lni lni-pencil"></a>
-                                                    </button>
-                                                    <button class="text-danger">
-                                                        <a href="ctrlData/ctrl.delete.task.php?task_id=<?php echo $task['task_id']; ?>"
-                                                            class="lni lni-trash-can"></a>
-                                                    </button>
+                                                    <a class="text-primary lni lni-pencil m-1"
+                                                        href="edit.task.php?task_id=<?php echo $task['task_id']; ?>">
+                                                    </a>
+                                                    <a class="text-danger lni lni-trash-can m-1"
+                                                        href="ctrlData/ctrl.delete.task.php?task_id=<?php echo $task['task_id']; ?>"></a>
                                                 </div>
                                             </td>
                                         </tr>

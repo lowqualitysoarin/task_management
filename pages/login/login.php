@@ -1,8 +1,6 @@
-<?php 
+<?php
 session_start();
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -56,31 +54,34 @@ session_start();
                                 <div class="col-12">
                                     <div class="input-style-1">
                                         <label>Username</label>
-                                        <input type="text" name="username" class="form-control" placeholder="Username" />
+                                        <input type="text" name="username" class="form-control"
+                                            placeholder="Username" />
                                     </div>
                                 </div>
                             </div>
-                                <!-- end col -->
+                            <!-- end col -->
 
 
-                                 <div class="form-group">
+                            <div class="form-group">
                                 <div class="col-12">
                                     <div class="input-style-1">
                                         <label>Password</label>
-                                        <input type="password" name="password" class="form-control" placeholder="*********" />
+                                        <input type="password" name="password" class="form-control"
+                                            placeholder="*********" />
                                     </div>
-                                  </div>
                                 </div>
-                                <!-- end col -->
+                            </div>
+                            <!-- end col -->
 
-                                <div class="col-12">
-                                    <div class="button-group d-flex justify-content-center flex-wrap">
-                                        <button type="submit" name="submit" class="main-btn primary-btn btn-hover w-100 text-center">Login</button>
-                                    </div>
+                            <div class="col-12">
+                                <div class="button-group d-flex justify-content-center flex-wrap">
+                                    <button type="submit" name="submit"
+                                        class="main-btn primary-btn btn-hover w-100 text-center">Login</button>
                                 </div>
+                            </div>
                             <!-- end row -->
                         </form>
-                        
+
                     </div>
                 </div>
             </div>

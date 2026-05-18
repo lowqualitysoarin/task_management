@@ -1,4 +1,5 @@
 <?php include "../../includes/conn.php"; ?>
+<?php include "../../includes/session.start.php" ?>
 
 <!DOCTYPE html>
 <html lang="en">

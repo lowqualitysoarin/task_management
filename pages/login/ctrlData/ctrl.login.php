@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 
 include '../../../includes/conn.php';
@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
     $check_username = mysqli_query($conn, "SELECT * FROM users_tbl LEFT JOIN roles_tbl ON users_tbl.role = roles_tbl.role_id 
     WHERE username = '$username'");
 
-     if (!$check_username) {
+    if (!$check_username) {
         die("Query failed: " . mysqli_error($conn));
     }
 
@@ -20,32 +20,27 @@ if (isset($_POST['submit'])) {
 
     if ($result == 1) {
         $row = mysqli_fetch_array($check_username);
- 
         $check_pass = password_verify($password, $row['password']);
 
-    if  ($check_pass) {
-        $_SESSION['fullname'] = $row['fullname'];
-        $_SESSION['username'] = $row['username'];
-        $_SESSION['role'] = $row['role'];
-        $_SESSION['id'] = $row['user_id'];
+        if ($check_pass) {
+            $_SESSION['fullname'] = $row['full_name'];
+            $_SESSION['username'] = $row['username'];
+            $_SESSION['role'] = $row['role'];
+            $_SESSION['user_id'] = $row['user_id'];
 
-        $_SESSION['success_login'] = true;
-        header("location: ../../dashboard/dashboard.php");
-        exit();
-
-
-    } else {
-        $_SESSION['error_password'] = true;
-        header("location: ../login.php");
-        exit();
-    }
-
+            $_SESSION['success_login'] = true;
+            header("location: ../../dashboard/dashboard.php");
+            exit();
+        } else {
+            $_SESSION['error_password'] = true;
+            header("location: ../login.php");
+            exit();
+        }
     } else {
         $_SESSION['error_username'] = true;
         header("location: ../login.php");
         exit();
-
     }
-    }
+}
 
 ?>

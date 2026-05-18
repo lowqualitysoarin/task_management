@@ -1596,6 +1596,14 @@ h6,
   background: rgba(33, 150, 83, 0.1);
   color: #219653;
 }
+.icon-card .icon.danger {
+  background: rgba(251, 84, 84, 0.1);
+  color: #FB5454;
+}
+.icon-card .icon.info {
+  background: rgba(151, 202, 49, 0.1);
+  color: #97ca31;
+}
 .icon-card .icon.primary {
   background: rgba(54, 92, 245, 0.1);
   color: #365CF5;
