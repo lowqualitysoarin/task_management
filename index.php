@@ -1,4 +1,2 @@
 <?php
-header("location: pages/dashboard");
-$anothervar = "hi";
-$vartest = "hi";
+header("location: pages/dashboard/dashboard.php");

@@ -23,26 +23,27 @@
             <span class="divider">
                 <hr />
             </span>
-            <li class="nav-item nav-item-has-children">
-                <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#usersmenu"
-                    aria-controls="usersmenu" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon">
-                        <i class="lni lni-users"></i>
-                    </span>
-                    <span class="text"> Users </span>
-                </a>
-                <ul id="usersmenu" class="collapse dropdown-nav">
-                    <li>
-                        <a href="../users/add.user.php"> Add User </a>
-                    </li>
-                    <li>
-                        <a href="../users/list.user.php"> List Users </a>
-                    </li>
-                </ul>
-            </li>
             <?php
             if ($_SESSION['role'] == "Admin") {
                 ?>
+                <li class="nav-item nav-item-has-children">
+                    <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#usersmenu"
+                        aria-controls="usersmenu" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icon">
+                            <i class="lni lni-users"></i>
+                        </span>
+                        <span class="text"> Users </span>
+                    </a>
+                    <ul id="usersmenu" class="collapse dropdown-nav">
+                        <li>
+                            <a href="../users/add.user.php"> Add User </a>
+                        </li>
+                        <li>
+                            <a href="../users/list.user.php"> List Users </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="nav-item nav-item-has-children">
                     <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#tasksmenu"
                         aria-controls="tasksmenu" aria-expanded="false" aria-label="Toggle navigation">
