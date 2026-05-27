@@ -116,14 +116,25 @@
                                                 </p>
                                             </td>
                                             <td>
-                                                <div class="action">
-                                                    <a class="text-primary lni lni-pencil m-1"
-                                                        href="edit.task.php?task_id=<?php echo $task['task_id']; ?>">
-                                                    </a>
-                                                    <a class="text-danger lni lni-trash-can m-1"
-                                                        href="ctrlData/ctrl.delete.task.php?task_id=<?php echo $task['task_id']; ?>"></a>
-                                                </div>
-                                            </td>
+                                          <div class="action">
+
+                                     <!-- VIEW -->
+                                 <a class="text-success lni lni-eye m-1"
+                                  href="task.view.php?id=<?php echo $task['task_id']; ?>">
+                                   </a>
+
+                                  <!-- EDIT -->
+                                  <a class="text-primary lni lni-pencil m-1"
+                                      href="edit.task.php?task_id=<?php echo $task['task_id']; ?>">
+                                   </a>
+
+                                     <!-- DELETE -->
+                                     <a class="text-danger lni lni-trash-can m-1"
+                                     href="ctrlData/ctrl.delete.task.php?task_id=<?php echo $task['task_id']; ?>">
+                                       </a>
+
+                                    </div>
+                                       </td>
                                         </tr>
                                         <?php
                                     }

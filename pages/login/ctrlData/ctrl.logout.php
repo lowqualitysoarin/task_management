@@ -10,4 +10,14 @@ $_SESSION['success_logout'] = true;
 
 header('location: ../login.php');
 
+?><?php
+
+include '../../../includes/session.start.php';
+
+session_unset();
+session_destroy();
+
+header('Location: ../login.php');
+exit();
+
 ?>

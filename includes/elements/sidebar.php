@@ -24,7 +24,7 @@
                 <hr />
             </span>
             <?php
-            if ($_SESSION['role'] == "Admin") {
+            if (isset($_SESSION['role']) && $_SESSION['role'] == "Admin") {
                 ?>
                 <li class="nav-item nav-item-has-children">
                     <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#usersmenu"

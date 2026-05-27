@@ -23,8 +23,9 @@
                                         <img src="../../assets/images/profile/profile-image.png" alt="" />
                                     </div>
                                     <div>
-                                        <h6 class="fw-500"><?php echo $_SESSION['fullname']; ?></h6>
-                                        <p><?php echo $_SESSION['role']; ?></p>
+                                <h6 class="fw-500"><?php echo isset($_SESSION['fullname']) ? $_SESSION['fullname'] : 'User'; ?>
+</h6>
+                                        <p><?php echo isset($_SESSION['role']) ? $_SESSION['role'] : 'User'; ?></p>
                                     </div>
                                 </div>
                             </div>
