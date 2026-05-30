@@ -14,7 +14,7 @@
     <?php include_once "../../includes/components/links.php"; ?>
 </head>
 
-<body>
+<bodyx>
 
 <?php include_once "../../includes/components/preloader.php"; ?>
 <?php include_once "../../includes/elements/sidebar.php"; ?>
@@ -26,13 +26,21 @@
 <section class="section">
 <div class="container-fluid">
     <?php if(isset($_SESSION['success_login'])) { ?>
-    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-        <strong>Login Successful!</strong>
-        Welcome back, <?php echo $_SESSION['fullname']; ?>.
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
+<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+    <strong>Login Successful!</strong>
+    Welcome back, <?php echo $_SESSION['fullname']; ?>.
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+<?php unset($_SESSION['success_login']); ?>
+<?php } ?>
 
-    <?php unset($_SESSION['success_login']); ?>
+<?php if(isset($_SESSION['success'])) { ?>
+<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+    <strong>Success!</strong>
+    <?php echo $_SESSION['success']; ?>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+<?php unset($_SESSION['success']); ?>
 <?php } ?>
 
 <!-- TITLE -->
@@ -202,7 +210,7 @@ while ($st = mysqli_fetch_array($status_list)) {
 
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" name="submit" class="btn btn-primary">Save</button>
 </div>
 
 </div>
