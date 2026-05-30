@@ -40,6 +40,33 @@ INSERT INTO `roles_tbl` VALUES (1,'Admin'),(2,'Member');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `task_members_tbl`
+--
+
+DROP TABLE IF EXISTS `task_members_tbl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `task_members_tbl` (
+  `task_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  KEY `task_members_tbl_users_tbl_FK` (`user_id`),
+  KEY `task_members_tbl_tasks_tbl_FK` (`task_id`),
+  CONSTRAINT `task_members_tbl_tasks_tbl_FK` FOREIGN KEY (`task_id`) REFERENCES `tasks_tbl` (`task_id`) ON DELETE CASCADE,
+  CONSTRAINT `task_members_tbl_users_tbl_FK` FOREIGN KEY (`user_id`) REFERENCES `users_tbl` (`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `task_members_tbl`
+--
+
+LOCK TABLES `task_members_tbl` WRITE;
+/*!40000 ALTER TABLE `task_members_tbl` DISABLE KEYS */;
+INSERT INTO `task_members_tbl` VALUES (11,6),(11,7);
+/*!40000 ALTER TABLE `task_members_tbl` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `task_status_tbl`
 --
 
@@ -77,7 +104,7 @@ CREATE TABLE `tasks_tbl` (
   `task_status` int(11) NOT NULL DEFAULT 1,
   `assigned_user_id` int(11) DEFAULT 0,
   PRIMARY KEY (`task_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,7 +113,7 @@ CREATE TABLE `tasks_tbl` (
 
 LOCK TABLES `tasks_tbl` WRITE;
 /*!40000 ALTER TABLE `tasks_tbl` DISABLE KEYS */;
-INSERT INTO `tasks_tbl` VALUES (4,'A New Task','Tasky',1,6),(5,'Test Task Number 2','Another Test Task',2,0),(6,'Hellooooo','Hello Task',3,0),(7,'Omaygot','Ambatunat',4,0);
+INSERT INTO `tasks_tbl` VALUES (4,'A New Task','Tasky',1,6),(5,'Test Task Number 2','Another Test Task',2,0),(6,'Hellooooo','Hello Task',3,0),(7,'Omaygot','Ambatunat',4,0),(11,'Deersicle','._.',1,0);
 /*!40000 ALTER TABLE `tasks_tbl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,8 +131,10 @@ CREATE TABLE `users_tbl` (
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `role` int(11) NOT NULL DEFAULT 2,
+  `bio` varchar(255) DEFAULT NULL,
+  `profile` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,7 +143,7 @@ CREATE TABLE `users_tbl` (
 
 LOCK TABLES `users_tbl` WRITE;
 /*!40000 ALTER TABLE `users_tbl` DISABLE KEYS */;
-INSERT INTO `users_tbl` VALUES (5,'Joshua Smith','joshsmith','joshsmith@email.com','$2y$10$hIi7a/1HZXfxoDVhAKNiNOyvsVQ7NRRfvUOQaJZEeYtEv/WVX7Yq2',1),(6,'Mark Unremarkable','unremarkable','unremarkable@mail.com','$2y$10$NORj0oD6hsPJ2/dJlbK2rulPmvC/FS8Zfv8QJUFqn6/5SIhz59jEq',2);
+INSERT INTO `users_tbl` VALUES (5,'Joshua Smith','joshsmith','joshsmith@email.com','$2y$10$hIi7a/1HZXfxoDVhAKNiNOyvsVQ7NRRfvUOQaJZEeYtEv/WVX7Yq2',1,NULL,'uploads/user_5_1780152775.png'),(6,'Mark Unremarkable','unremarkable','unremarkable@mail.com','$2y$10$sO190L0WuthS//le3wrbU.S2cjnws81AQ7JahLJyX8z2YoilEYm9q',2,NULL,'uploads/user_6_1780152986.png'),(7,'Mark Edward Fischbach','markiplier','mynameiswelcome@yahoo.com','$2y$10$SzppkHZa5glGDrXyVuvcMuLDWo6X3d4Gh950CP3yVWGdvaKAQgWZG',2,NULL,'uploads/user_7_1780153074.png');
 /*!40000 ALTER TABLE `users_tbl` ENABLE KEYS */;
 UNLOCK TABLES;
 
