@@ -18,10 +18,9 @@
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="profile-info">
                                 <div class="info">
-                                    <div class="image">
-                                        <img src="<?php echo get_user_profile_image($conn, $_SESSION['user_id']); ?>"
-                                            alt="<?php echo $_SESSION['fullname']; ?>" />
-                                    </div>
+                                    <img class="image"
+                                        src="<?php echo get_user_profile_image($conn, $_SESSION['user_id']); ?>"
+                                        alt="<?php echo $_SESSION['fullname']; ?>" />
                                     <div>
                                         <h6 class="fw-500">
                                             <?php echo $_SESSION['fullname']; ?>

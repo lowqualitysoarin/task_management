@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                             <td class="min-width">
                                                 <div class="lead">
                                                     <div class="lead-image">
-                                                        <img src="../../assets/images/lead/lead-1.png" alt="" />
+                                                        <img src="<?php echo get_user_profile_image($conn, $user['user_id']); ?>" alt="<?php echo $user['full_name']; ?>"/>
                                                     </div>
                                                     <div class="lead-text">
                                                         <p><?php echo $user['full_name']; ?></p>

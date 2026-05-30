@@ -150,10 +150,9 @@
 
                                     <div class="row">
                                         <div class="profile-info">
-                                            <div class="profile-image">
-                                                <img src="<?php echo get_user_profile_image($conn, $user['user_id']); ?>"
-                                                    alt="<?php echo $user['full_name']; ?>" />
-                                            </div>
+                                            <img class="profile-image"
+                                                src="<?php echo get_user_profile_image($conn, $user['user_id']); ?>"
+                                                alt="<?php echo $user['full_name']; ?>" />
                                         </div>
                                         <div class="input-style-1">
                                             <?php
