@@ -1,5 +1,8 @@
 <?php require_once '../../includes/conn.php'; ?>
-<?php include "../../includes/session.start.php" ?>
+<?php include_once "../../includes/session.start.php"; ?>
+<?php include_once "../../includes/utils/login.access.check.php"; ?>
+<?php include_once "../../includes/utils/admin.access.check.php"; ?>
+<?php include_once "../../includes/utils/user.utils.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">

@@ -39,36 +39,42 @@ session_start();
             </div>
             <!-- end col -->
             <div class="col-lg-6 align-items-center justify-content-center d-flex">
-                <div class="signin-wrapper">
+                <div class="signin-wrapper col-md-7">
                     <div class="form-wrapper">
                         <h6 class="mb-15">Login Page</h6>
-<p class="text-sm mb-25">
-    Start creating the best possible user experience for you
-    customers.
-</p>
+                        <p class="text-sm mb-25">
+                            Please enter your credentials to continue using your account.
+                        </p>
 
-<?php if(isset($_SESSION['success_logout'])) { ?>
-    <div class="alert alert-success mb-3">
-        Logout Successful!
-    </div>
-    <?php unset($_SESSION['success_logout']); ?>
-<?php } ?>
+                        <?php if (isset($_SESSION['success_logout'])) { ?>
+                            <div class="alert alert-success mb-3">
+                                Logout Successful!
+                            </div>
+                            <?php unset($_SESSION['success_logout']); ?>
+                        <?php } ?>
 
-<?php if(isset($_SESSION['error_username'])) { ?>
-    <div class="alert alert-danger mb-3">
-        Username not found!
-    </div>
-    <?php unset($_SESSION['error_username']); ?>
-<?php } ?>
+                        <?php if (isset($_SESSION['error_username'])) { ?>
+                            <div class="alert alert-danger mb-3">
+                                Username not found!
+                            </div>
+                            <?php unset($_SESSION['error_username']); ?>
+                        <?php } ?>
 
-<?php if(isset($_SESSION['error_password'])) { ?>
-    <div class="alert alert-danger mb-3">
-        Incorrect password!
-    </div>
-    <?php unset($_SESSION['error_password']); ?>
-<?php } ?>
+                        <?php if (isset($_SESSION['error_password'])) { ?>
+                            <div class="alert alert-danger mb-3">
+                                Incorrect password!
+                            </div>
+                            <?php unset($_SESSION['error_password']); ?>
+                        <?php } ?>
 
-<form action="ctrlData/ctrl.login.php" method="POST">
+                        <?php if (isset($_SESSION['register_success'])) { ?>
+                            <div class="alert alert-success mb-3">
+                                Registration Success! Please Log-In into your account
+                            </div>
+                            <?php unset($_SESSION['register_success']); ?>
+                        <?php } ?>
+
+                        <form action="ctrlData/ctrl.login.php" method="POST">
 
                             <div class="form-group">
                                 <div class="col-12">

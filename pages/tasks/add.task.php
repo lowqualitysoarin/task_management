@@ -1,5 +1,8 @@
-<?php include "../../includes/conn.php"; ?>
-<?php include "../../includes/session.start.php" ?>
+<?php require_once "../../includes/conn.php"; ?>
+<?php include_once "../../includes/session.start.php"; ?>
+<?php include_once "../../includes/utils/login.access.check.php"; ?>
+<?php include_once "../../includes/utils/admin.access.check.php"; ?>
+<?php include_once "../../includes/utils/user.utils.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -126,8 +129,6 @@
                 <!-- end input -->
             </div>
             <!-- End Row -->
-            </div>
-            <!-- end container -->
         </section>
         <!-- ========== section end ========== -->
 

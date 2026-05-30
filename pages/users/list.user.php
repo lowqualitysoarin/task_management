@@ -1,5 +1,8 @@
 <?php require_once '../../includes/conn.php'; ?>
-<?php include "../../includes/session.start.php" ?>
+<?php include_once "../../includes/session.start.php"; ?>
+<?php include_once "../../includes/utils/login.access.check.php"; ?>
+<?php include_once "../../includes/utils/admin.access.check.php"; ?>
+<?php include_once "../../includes/utils/user.utils.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +18,7 @@
 </head>
 
 <body>
-    <?php include_once "../../includes/components/preloader.php"; ?>
+    <?php #include_once "../../includes/components/preloader.php"; ?>
 
     <?php include_once "../../includes/elements/sidebar.php"; ?>
 
@@ -89,7 +92,7 @@
                                             <td class="min-width">
                                                 <div class="lead">
                                                     <div class="lead-image">
-                                                        <img src="../../assets/images/lead/lead-1.png" alt="" />
+                                                        <img src="<?php echo get_user_profile_image($conn, $user['user_id']); ?>" alt="<?php echo $user['full_name']; ?>"/>
                                                     </div>
                                                     <div class="lead-text">
                                                         <p><?php echo $user['full_name']; ?></p>

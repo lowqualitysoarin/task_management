@@ -3387,7 +3387,7 @@ h6,
   z-index: 1;
 }
 .settings-card-1 .profile-info .profile-image img {
-  width: 100%;
+  width: 75px;
   border-radius: 50%;
 }
 .settings-card-1 .profile-info .profile-image .update-image {

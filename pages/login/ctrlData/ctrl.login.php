@@ -1,9 +1,6 @@
 <?php
-include '../../../includes/session.start.php';
-
 include '../../../includes/conn.php';
-
-
+include '../../../includes/session.start.php';
 
 if (isset($_POST['submit'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
