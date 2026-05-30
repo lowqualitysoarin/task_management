@@ -25,6 +25,15 @@
 
 <section class="section">
 <div class="container-fluid">
+    <?php if(isset($_SESSION['success_login'])) { ?>
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        <strong>Login Successful!</strong>
+        Welcome back, <?php echo $_SESSION['fullname']; ?>.
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <?php unset($_SESSION['success_login']); ?>
+<?php } ?>
 
 <!-- TITLE -->
 <div class="title-wrapper pt-30">

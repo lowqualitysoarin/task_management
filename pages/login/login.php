@@ -42,13 +42,33 @@ session_start();
                 <div class="signin-wrapper">
                     <div class="form-wrapper">
                         <h6 class="mb-15">Login Page</h6>
-                        <p class="text-sm mb-25">
-                            Start creating the best possible user experience for you
-                            customers.
-                        </p>
+<p class="text-sm mb-25">
+    Start creating the best possible user experience for you
+    customers.
+</p>
 
+<?php if(isset($_SESSION['success_logout'])) { ?>
+    <div class="alert alert-success mb-3">
+        Logout Successful!
+    </div>
+    <?php unset($_SESSION['success_logout']); ?>
+<?php } ?>
 
-                        <form action="ctrlData/ctrl.login.php" method="POST">
+<?php if(isset($_SESSION['error_username'])) { ?>
+    <div class="alert alert-danger mb-3">
+        Username not found!
+    </div>
+    <?php unset($_SESSION['error_username']); ?>
+<?php } ?>
+
+<?php if(isset($_SESSION['error_password'])) { ?>
+    <div class="alert alert-danger mb-3">
+        Incorrect password!
+    </div>
+    <?php unset($_SESSION['error_password']); ?>
+<?php } ?>
+
+<form action="ctrlData/ctrl.login.php" method="POST">
 
                             <div class="form-group">
                                 <div class="col-12">
