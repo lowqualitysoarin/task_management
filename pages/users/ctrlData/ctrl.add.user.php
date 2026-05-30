@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "../../../includes/conn.php";
 
 if (!isset($_POST['submit'])) {
@@ -15,7 +16,13 @@ $hashed_pass = password_hash($password, PASSWORD_DEFAULT);
 
 $role = $_POST["role"];
 
-mysqli_query($conn, "INSERT INTO users_tbl (full_name, username, email, password, role) VALUES ('$full_name', '$username', '$email', '$hashed_pass', '$role')");
+mysqli_query($conn, "
+    INSERT INTO users_tbl (full_name, username, email, password, role)
+    VALUES ('$full_name', '$username', '$email', '$hashed_pass', '$role')
+");
+
+$_SESSION['success'] = "User added successfully.";
+
 header("location: ../list.user.php");
 exit();
-
+?>

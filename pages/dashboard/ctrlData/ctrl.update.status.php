@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "../../../includes/conn.php";
 
 if (!isset($_POST['submit']) || !isset($_GET['task_id'])) {
@@ -9,5 +10,17 @@ if (!isset($_POST['submit']) || !isset($_GET['task_id'])) {
 $task_id = $_GET['task_id'];
 $task_status = $_POST['taskstatus'];
 
-mysqli_query($conn, "UPDATE tasks_tbl SET task_status = '$task_status' WHERE task_id = '$task_id'");
+// update task status
+mysqli_query(
+    $conn,
+    "UPDATE tasks_tbl 
+     SET task_status = '$task_status' 
+     WHERE task_id = '$task_id'"
+);
+
+// success message for dashboard popup
+$_SESSION['success'] = "Task updated successfully.";
+
 header("location: ../dashboard.php");
+exit();
+?>

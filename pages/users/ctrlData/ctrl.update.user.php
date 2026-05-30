@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "../../../includes/conn.php";
 include "../../../includes/session.start.php";
 
@@ -59,12 +60,12 @@ if (isset($_POST['submit'])) {
 
 
         if ($_SESSION['role'] == 'Admin') {
-
+            $_SESSION['success'] = "User updated successfully.";
             header("location: ../list.user.php");
             exit();
 
         } else {
-
+            $_SESSION['success'] = "Profile updated successfully.";
             header("location: ../../dashboard/dashboard.php");
             exit();
 
