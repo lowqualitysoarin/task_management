@@ -24,9 +24,17 @@ include "../../includes/session.start.php";
 
 <!-- ======== main-wrapper start =========== -->
 <main class="main-wrapper">
+    <?php include_once "../../includes/elements/navbar.php"; ?>
 
-<?php include_once "../../includes/elements/navbar.php"; ?>
-
+    <!-- SUCCESS ALERT -->
+    <?php if(isset($_SESSION['success'])) { ?>
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        <strong>Success!</strong>
+        <?php echo $_SESSION['success']; ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <?php unset($_SESSION['success']); ?>
+    <?php } ?>
 <!-- ✅ TOASTR SUCCESS MESSAGE -->
 <?php if (isset($_SESSION['success'])) { ?>
 <script>
