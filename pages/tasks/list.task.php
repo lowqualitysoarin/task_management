@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <?php include_once "../../includes/components/preloader.php"; ?>
+    <?php #include_once "../../includes/components/preloader.php"; ?>
 
     <?php include_once "../../includes/elements/sidebar.php"; ?>
 
@@ -28,16 +28,16 @@
 
         <!-- ========== section start ========== -->
         <section class="section">
-    <div class="container-fluid">
+            <div class="container-fluid">
 
-        <?php if(isset($_SESSION['success'])) { ?>
-        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-            <strong>Success!</strong>
-            <?php echo $_SESSION['success']; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-        <?php unset($_SESSION['success']); ?>
-        <?php } ?>
+                <?php if (isset($_SESSION['success'])) { ?>
+                    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                        <strong>Success!</strong>
+                        <?php echo $_SESSION['success']; ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    <?php unset($_SESSION['success']); ?>
+                <?php } ?>
                 <!-- ========== title-wrapper start ========== -->
                 <div class="title-wrapper pt-30">
                     <div class="row align-items-center">
@@ -83,7 +83,7 @@
                                             <h6>Status</h6>
                                         </th>
                                         <th>
-                                            <h6>Assigned Member</h6>
+                                            <h6>Assigned Members</h6>
                                         </th>
                                         <th>
                                             <h6>Action</h6>
@@ -94,7 +94,7 @@
                                 <tbody>
                                     <!-- end table row -->
                                     <?php
-                                    $tasks = mysqli_query($conn, "SELECT * FROM tasks_tbl LEFT JOIN task_status_tbl ON task_status_tbl.status_id = tasks_tbl.task_status LEFT JOIN users_tbl ON users_tbl.user_id = tasks_tbl.assigned_user_id");
+                                    $tasks = mysqli_query($conn, "SELECT * FROM tasks_tbl LEFT JOIN task_status_tbl ON task_status_tbl.status_id = tasks_tbl.task_status");
                                     while ($task = mysqli_fetch_array($tasks)) {
                                         ?>
                                         <tr>
@@ -116,37 +116,46 @@
                                                 <span
                                                     class="status-btn <?php echo $status_color; ?>"><?php echo $task['status']; ?></span>
                                             </td>
-                                            <td class="min-width">
-                                                <p>
+                                            <td>
+                                                <div class="d-flex align-items-center">
                                                     <?php
-                                                    if (isset($task['assigned_user_id']) && (int) $task['assigned_user_id'] != 0) {
-                                                        echo $task['full_name'];
-                                                    } else {
-                                                        echo "None";
+                                                    $task_id = $task['task_id'];
+
+                                                    $select_members = mysqli_query($conn, "SELECT * FROM task_members_tbl LEFT JOIN users_tbl ON users_tbl.user_id = task_members_tbl.user_id WHERE task_id = '$task_id'");
+                                                    while ($row = mysqli_fetch_array($select_members)) {
+                                                        ?>
+                                                        <div class="text-center mx-1">
+                                                            <img class="rounded rounded-circle"
+                                                                src="<?php echo get_user_profile_image($conn, $row['user_id']); ?>"
+                                                                alt="<?php echo $row['full_name']; ?>"
+                                                                title="<?php echo $row['full_name']; ?>"
+                                                                style="width: 35px; height: 35px;"/>
+                                                        </div>
+                                                        <?php
                                                     }
                                                     ?>
-                                                </p>
+                                                </div>
                                             </td>
                                             <td>
-                                          <div class="action">
+                                                <div class="action">
 
-                                     <!-- VIEW -->
-                                 <a class="text-success lni lni-eye m-1"
-                                  href="task.view.php?id=<?php echo $task['task_id']; ?>">
-                                   </a>
+                                                    <!-- VIEW -->
+                                                    <a class="text-success lni lni-eye m-1"
+                                                        href="task.view.php?id=<?php echo $task['task_id']; ?>">
+                                                    </a>
 
-                                  <!-- EDIT -->
-                                  <a class="text-primary lni lni-pencil m-1"
-                                      href="edit.task.php?task_id=<?php echo $task['task_id']; ?>">
-                                   </a>
+                                                    <!-- EDIT -->
+                                                    <a class="text-primary lni lni-pencil m-1"
+                                                        href="edit.task.php?task_id=<?php echo $task['task_id']; ?>">
+                                                    </a>
 
-                                     <!-- DELETE -->
-                                     <a class="text-danger lni lni-trash-can m-1"
-                                     href="ctrlData/ctrl.delete.task.php?task_id=<?php echo $task['task_id']; ?>">
-                                       </a>
+                                                    <!-- DELETE -->
+                                                    <a class="text-danger lni lni-trash-can m-1"
+                                                        href="ctrlData/ctrl.delete.task.php?task_id=<?php echo $task['task_id']; ?>">
+                                                    </a>
 
-                                    </div>
-                                       </td>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <?php
                                     }

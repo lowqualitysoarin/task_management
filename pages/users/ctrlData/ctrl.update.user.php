@@ -16,20 +16,14 @@ if (isset($_POST['submit'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-
     if ($_SESSION['role'] == 'Admin') {
-
         $role = $_POST['role'];
-
     } else {
-
         $get_role = mysqli_query($conn, "SELECT role FROM users_tbl WHERE user_id = '$user_id'");
         $role_data = mysqli_fetch_assoc($get_role);
 
         $role = $role_data['role'];
     }
-
-
 
     $update_user = mysqli_query($conn, "
         UPDATE users_tbl 
@@ -43,11 +37,7 @@ if (isset($_POST['submit'])) {
     ");
 
     if ($update_user) {
-
-
-
         if ($_SESSION['user_id'] == $user_id) {
-
             $_SESSION['fullname'] = $fullname;
 
             // sync session role properly
@@ -58,21 +48,16 @@ if (isset($_POST['submit'])) {
             }
         }
 
-
         if ($_SESSION['role'] == 'Admin') {
             $_SESSION['success'] = "User updated successfully.";
             header("location: ../list.user.php");
             exit();
-
         } else {
             $_SESSION['success'] = "Profile updated successfully.";
             header("location: ../../dashboard/dashboard.php");
             exit();
-
         }
-
     } else {
-
         echo "Failed to update user: " . mysqli_error($conn);
     }
 } 

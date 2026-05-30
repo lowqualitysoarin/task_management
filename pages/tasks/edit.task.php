@@ -31,6 +31,12 @@
 
     $select_task = mysqli_query($conn, "SELECT * FROM tasks_tbl WHERE task_id = '$task_id'");
     $task = mysqli_fetch_array($select_task);
+
+    $task_members = [];
+    $select_task_members = mysqli_query($conn, "SELECT user_id FROM task_members_tbl WHERE task_id = '$task_id'");
+    while ($row = mysqli_fetch_array($select_task_members)) {
+        $task_members[] = (int)$row['user_id'];
+    }
     ?>
 
     <!-- ======== main-wrapper start =========== -->
@@ -103,25 +109,41 @@
                                         <div class="col mb-2">
                                             <div class="select-style-1">
                                                 <label>Select Member</label>
-                                                <div class="select-position">
-                                                    <select class="light-bg" name="assignedmember">
-                                                        <option value="0" <?php if ($task['assigned_user_id'] == 0) echo "checked"; ?>>None</option>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-secondary col-md-2" style="height: 50px;"
+                                                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Select Assignees
+                                                    </button>
+                                                    <ul class="dropdown-menu overflow-auto" style="max-height: 200px;">
                                                         <?php
                                                         $select_users = mysqli_query($conn, "SELECT * FROM users_tbl LEFT JOIN roles_tbl ON roles_tbl.role_id = users_tbl.role");
                                                         while ($user = mysqli_fetch_array($select_users)) {
                                                             if ($user['role'] != "Admin") {
                                                                 ?>
-                                                                <option value="<?php echo $user['user_id']; ?>" <?php
-                                                                   if ($task['assigned_user_id'] == $user['user_id'])
-                                                                       echo "checked";
-                                                                   ?>>
-                                                                    <?php echo $user['full_name'] ?>
-                                                                </option>
+                                                                <li>
+                                                                    <?php
+                                                                    $checkbox_id = "assignee" . (string) $user['user_id'];
+                                                                    ?>
+                                                                    <div class="form-check form-check-inline m-2">
+                                                                        <input class="form-check-input" type="checkbox"
+                                                                            id="<?php echo $checkbox_id; ?>"
+                                                                            value="<?php echo $user['user_id']; ?>"
+                                                                            name="assignees[]" <?php
+                                                                            if (in_array($user['user_id'], $task_members)) {
+                                                                                ?> checked <?php
+                                                                            }
+                                                                            ?>>
+                                                                        <label for="<?php echo $checkbox_id; ?>"
+                                                                            class="form-check-label">
+                                                                            <?php echo $user['full_name']; ?>
+                                                                        </label>
+                                                                    </div>
+                                                                </li>
                                                                 <?php
                                                             }
                                                         }
                                                         ?>
-                                                    </select>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>

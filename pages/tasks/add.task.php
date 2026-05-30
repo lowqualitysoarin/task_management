@@ -75,36 +75,51 @@
                                     </div>
                                     <div class="row">
                                         <div class="col">
-                                            <label>Task Description</label>
                                             <div class="input-style-3">
-                                                <textarea type="text" placeholder="Task Description"
-                                                    name="taskdescription" rows="5"></textarea>
-                                                <span class="icon"><i class="lni lni-text-format"></i></span>
+                                                <label>Task Description</label>
+                                                <div class="input-style-3">
+                                                    <textarea type="text" placeholder="Task Description"
+                                                        name="taskdescription" rows="5"></textarea>
+                                                    <span class="icon"><i class="lni lni-text-format"></i></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <h6 class="mb-25">Assign Member</h6>
                                     <div class="row">
-                                        <div class="col mb-3">
+                                        <div class="col mb-1">
                                             <div class="select-style-1">
                                                 <label>Select Member</label>
-                                                <div class="select-position">
-                                                    <select class="light-bg" name="assignedmember">
-                                                        <option class="text-gray" value="0" checked>None</option>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-secondary col-md-2" style="height: 50px;"
+                                                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Select Assignees
+                                                    </button>
+                                                    <ul class="dropdown-menu overflow-auto" style="max-height: 200px;">
                                                         <?php
                                                         $select_users = mysqli_query($conn, "SELECT * FROM users_tbl LEFT JOIN roles_tbl ON roles_tbl.role_id = users_tbl.role");
                                                         while ($user = mysqli_fetch_array($select_users)) {
                                                             if ($user['role'] != "Admin") {
                                                                 ?>
-                                                                <option value="<?php echo $user['user_id']; ?>">
-                                                                    <?php echo $user['full_name'] ?>
-                                                                </option>
+                                                                <li>
+                                                                    <?php
+                                                                    $checkbox_id = "assignee" . (string) $user['user_id'];
+                                                                    ?>
+                                                                    <div class="form-check form-check-inline m-2">
+                                                                        <input class="form-check-input" type="checkbox"
+                                                                            id="<?php echo $checkbox_id; ?>"
+                                                                            value="<?php echo $user['user_id']; ?>"
+                                                                            name="assignees[]">
+                                                                        <label for="<?php echo $checkbox_id; ?>"
+                                                                            class="form-check-label"><?php echo $user['full_name']; ?></label>
+                                                                    </div>
+                                                                </li>
                                                                 <?php
                                                             }
                                                         }
                                                         ?>
-                                                    </select>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
@@ -112,8 +127,8 @@
 
                                     <div class="row">
                                         <div class="col">
-                                            <button type="submit" style="height: 50px; width: 110px"
-                                                class="btn btn-primary" name="submit">Add
+                                            <button type="submit" style="height: 50px;" class="btn btn-primary col-md-1"
+                                                name="submit">Add
                                                 Task</button>
                                         </div>
                                     </div>

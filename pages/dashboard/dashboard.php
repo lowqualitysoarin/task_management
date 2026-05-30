@@ -154,7 +154,26 @@ LEFT JOIN users_tbl ON users_tbl.user_id = tasks_tbl.assigned_user_id
                                                     </span>
                                                 </td>
 
-                                                <td><?php echo $assigned_member; ?></td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <?php
+                                                        $task_id = $task['task_id'];
+
+                                                        $select_members = mysqli_query($conn, "SELECT * FROM task_members_tbl LEFT JOIN users_tbl ON users_tbl.user_id = task_members_tbl.user_id WHERE task_id = '$task_id'");
+                                                        while ($row = mysqli_fetch_array($select_members)) {
+                                                            ?>
+                                                            <div class="text-center mx-1">
+                                                                <img class="rounded rounded-circle"
+                                                                    src="<?php echo get_user_profile_image($conn, $row['user_id']); ?>"
+                                                                    alt="<?php echo $row['full_name']; ?>"
+                                                                    title="<?php echo $row['full_name']; ?>"
+                                                                    style="width: 35px; height: 35px;" />
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                </td>
 
                                                 <!-- VIEW TASK (ICON ONLY) -->
                                                 <td>
