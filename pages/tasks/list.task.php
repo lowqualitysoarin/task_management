@@ -25,7 +25,16 @@
 
         <!-- ========== section start ========== -->
         <section class="section">
-            <div class="container-fluid">
+    <div class="container-fluid">
+
+        <?php if(isset($_SESSION['success'])) { ?>
+        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            <strong>Success!</strong>
+            <?php echo $_SESSION['success']; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <?php unset($_SESSION['success']); ?>
+        <?php } ?>
                 <!-- ========== title-wrapper start ========== -->
                 <div class="title-wrapper pt-30">
                     <div class="row align-items-center">
