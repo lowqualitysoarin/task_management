@@ -68,7 +68,7 @@ mysqli_query(
     (
         task_name,
         task_description,
-        assigned_user_id,
+        task_status,
         task_image
     )
     VALUES
