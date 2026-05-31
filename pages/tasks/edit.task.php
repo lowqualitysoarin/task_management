@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon" />
-    <title>Task Management | Add Task</title>
+    <title>Task Management | Edit Task</title>
 
     <?php include_once "../../includes/components/links.php"; ?>
 </head>
@@ -51,7 +51,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="title">
-                                <h2>Add Task</h2>
+                                <h2>Edit Task</h2>
                             </div>
                         </div>
                         <!-- end col -->
@@ -63,7 +63,7 @@
                                             <a href="../dashboard/dashboard.php">Dashboard</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">
-                                            Add Task
+                                            Edit Task
                                         </li>
                                     </ol>
                                 </nav>
@@ -103,6 +103,39 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                     <div class="card-style mb-30">
+                                    <?php if(!empty($task['task_image'])) { ?>
+                                                <div class="mb-3">
+
+                                                    <strong>Current Attachment:</strong>
+
+                                                    <br><br>
+
+                                                    <a href="../../uploads/<?php echo $task['task_image']; ?>"
+                                                    target="_blank"
+                                                    class="btn btn-success">
+
+                                                        View
+
+                                                    </a>
+
+                                                    <a href="delete_attachment.php?id=<?php echo $task['task_id']; ?>"
+                                                    class="btn btn-danger"
+                                                    onclick="return confirm('Delete attachment?')">
+
+                                                        Delete
+
+                                                    </a>
+
+                                                </div>
+
+                                            <?php } else { ?>
+
+                                                <p>No attachment uploaded.</p>
+
+                                            <?php } ?>
+                                        </div>
 
                                     <h6 class="mb-25">Assign Member</h6>
                                     <div class="row">

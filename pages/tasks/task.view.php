@@ -358,6 +358,30 @@ switch ($task['task_status']) {
             border-radius: 15px;
         }
 
+        .btn{
+    display:inline-block;
+    padding:8px 15px;
+    border-radius:8px;
+    text-decoration:none;
+    color:white;
+    font-size:13px;
+    border:none;
+    cursor:pointer;
+    margin-right:5px;
+}
+
+.btn-primary{
+    background:#4f46e5;
+}
+
+.btn-success{
+    background:#10b981;
+}
+
+.btn-danger{
+    background:#ef4444;
+}
+
         /* =========================
    RESPONSIVE
 ========================= */
@@ -460,27 +484,13 @@ switch ($task['task_status']) {
 
                     <?php if (!empty($task['task_image'])) { ?>
 
-                        <div class="gallery">
+                        <a href="../../uploads/<?php echo $task['task_image']; ?>"
+                        target="_blank"
+                        class="btn btn-success">
 
-                            <div class="image-card" onclick="openImage('../../uploads/<?php echo $task['task_image']; ?>')">
+                            View Attachment
 
-                                <img src="../../uploads/<?php echo $task['task_image']; ?>">
-
-                                <div class="image-info">
-
-                                    <div class="image-name">
-                                        <?php echo $task['task_image']; ?>
-                                    </div>
-
-                                    <div class="image-size">
-                                        Uploaded Image
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
+                        </a>
 
                     <?php } else { ?>
 
