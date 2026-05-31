@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
         "UPDATE tasks_tbl
      SET task_name = '$task_name',
          task_description = '$task_description',
-         assigned_user_id = '$assigned_member',
+         task_image = '$task_image',
          task_status = '$task_status'
      WHERE task_id = '$task_id'"
     );
