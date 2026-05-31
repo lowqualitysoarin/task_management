@@ -11,10 +11,8 @@ if (!isset($_GET['id'])) {
 $task_id = mysqli_real_escape_string($conn, $_GET['id']);
 
 $query = mysqli_query($conn, "
-    SELECT tasks_tbl.*, users_tbl.full_name
+    SELECT tasks_tbl.*
     FROM tasks_tbl
-    LEFT JOIN users_tbl 
-    ON tasks_tbl.assigned_user_id = users_tbl.user_id
     WHERE task_id = '$task_id'
 ");
 
@@ -484,7 +482,7 @@ switch ($task['task_status']) {
 
                     <?php if (!empty($task['task_image'])) { ?>
 
-                        <a href="../../uploads/<?php echo $task['task_image']; ?>"
+                        <a href="../../uploads/attachments/<?php echo $task['task_image']; ?>"
                         target="_blank"
                         class="btn btn-success">
 

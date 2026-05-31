@@ -80,13 +80,13 @@ if (isset($_POST['submitprofile'])) {
 
     $new_file_name = "user_" . $user_id . "_" . time() . "." . $file_ext;
 
-    $upload_file_path = $_SERVER['DOCUMENT_ROOT'] . '/task_management/uploads/' . $new_file_name;
-    $file_path = "uploads/" . $new_file_name;
+    $upload_file_path = $_SERVER['DOCUMENT_ROOT'] . '/task_management/uploads/profiles/' . $new_file_name;
+    $file_path = "uploads/profiles/" . $new_file_name;
 
     if (move_uploaded_file($file_temp_name, $upload_file_path)) {
         $query = mysqli_query($conn, "UPDATE users_tbl SET profile = '$file_path' WHERE user_id = '$user_id'");
         if ($query) {
-            header("Location: ../list.user.php");
+            header("Location: ../edit.user.php?user_id=" . $user_id);
             exit();
         } else {
             echo "Database error.";
@@ -106,7 +106,18 @@ if (isset($_POST['deleteprofile'])) {
     }
 
     mysqli_query($conn, "UPDATE users_tbl SET profile = null WHERE user_id = '$user_id'");
-    header("Location: ../list.user.php");
+    header("Location: ../edit.user.php?user_id=" . $user_id);
+    exit();
+}
+
+if (isset($_POST['submitbio'])) {
+    $select_user = mysqli_query($conn, "SELECT * FROM users_tbl WHERE user_id = '$user_id'");
+    $user = mysqli_fetch_array($select_user);
+
+    $bio = mysqli_real_escape_string($conn, $_POST['bio']);
+    mysqli_query($conn, "UPDATE users_tbl SET bio = '$bio'");
+
+    header("Location: ../../profile/profile.php?user_id=" . $user_id);
     exit();
 }
 

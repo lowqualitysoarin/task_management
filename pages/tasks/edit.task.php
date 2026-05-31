@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <?php include_once "../../includes/components/preloader.php"; ?>
+    <?php #include_once "../../includes/components/preloader.php"; ?>
 
     <?php include_once "../../includes/elements/sidebar.php"; ?>
     <?php
@@ -35,7 +35,7 @@
     $task_members = [];
     $select_task_members = mysqli_query($conn, "SELECT user_id FROM task_members_tbl WHERE task_id = '$task_id'");
     while ($row = mysqli_fetch_array($select_task_members)) {
-        $task_members[] = (int)$row['user_id'];
+        $task_members[] = (int) $row['user_id'];
     }
     ?>
 
@@ -75,12 +75,12 @@
                 </div>
                 <!-- ========== title-wrapper end ========== -->
 
-                <form action="ctrlData/ctrl.update.task.php?task_id=<?php echo $task_id; ?>"
-                    class="form-elements wrapper" method="POST">
-                    <div class="form-elements-wrapper">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <!-- input style start -->
+                <div class="form-elements-wrapper">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- input style start -->
+                            <form action="ctrlData/ctrl.update.task.php?task_id=<?php echo $task_id; ?>"
+                                class="form-elements wrapper" method="POST">
                                 <div class="card-style mb-30">
                                     <h6 class="mb-25">Task</h6>
                                     <div class="row">
@@ -103,39 +103,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                     <div class="card-style mb-30">
-                                    <?php if(!empty($task['task_image'])) { ?>
-                                                <div class="mb-3">
-
-                                                    <strong>Current Attachment:</strong>
-
-                                                    <br><br>
-
-                                                    <a href="../../uploads/<?php echo $task['task_image']; ?>"
-                                                    target="_blank"
-                                                    class="btn btn-success">
-
-                                                        View
-
-                                                    </a>
-
-                                                    <a href="delete_attachment.php?id=<?php echo $task['task_id']; ?>"
-                                                    class="btn btn-danger"
-                                                    onclick="return confirm('Delete attachment?')">
-
-                                                        Delete
-
-                                                    </a>
-
-                                                </div>
-
-                                            <?php } else { ?>
-
-                                                <p>No attachment uploaded.</p>
-
-                                            <?php } ?>
-                                        </div>
 
                                     <h6 class="mb-25">Assign Member</h6>
                                     <div class="row">
@@ -214,13 +181,60 @@
                                     </div>
                                     <!-- end input -->
                                 </div>
-                                <!-- end card -->
-                                <!-- ======= input style end ======= -->
-                            </div>
+                            </form>
+                            <form action="ctrlData/ctrl.update.task.php?task_id=<?php echo $task_id; ?>"
+                                class="form-elements wrapper" method="POST" enctype="multipart/form-data">
+                                <div class="card-style mb-30">
+                                    <h6 class="mb-25">Task Image</h6>
+                                    <div class="card-style mb-30">
+                                        <?php if (!empty($task['task_image'])) { ?>
+                                            <div class="mb-3">
+                                                <strong class="mb-2">Current Attachment:</strong>
+                                                <a href="../../uploads/attachments/<?php echo $task['task_image']; ?>" target="_blank"
+                                                    class="btn btn-success">
+                                                    View
+                                                </a>
+
+                                                <a href="delete_attachment.php?id=<?php echo $task['task_id']; ?>"
+                                                    class="btn btn-danger" onclick="return confirm('Delete attachment?')">
+                                                    Delete
+                                                </a>
+                                            </div>
+
+                                        <?php } else { ?>
+                                            <p>No attachment uploaded.</p>
+
+                                            <div class="row mt-2">
+                                                <div class="col">
+                                                    <div class="input-style-1">
+                                                        <input type="file" name="attachment"
+                                                            accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx">
+
+                                                        <small class="text-muted">
+                                                            Allowed: JPG, PNG, PDF, DOC, DOCX, XLS, XLSX
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <button type="submit" style="height: 50px;  " class="btn btn-primary"
+                                                name="submitattachment">Update
+                                                Attachment</button>
+                                        </div>
+                                    </div>
+                                    <!-- end input -->
+                                </div>
+                            </form>
+                            <!-- end card -->
+                            <!-- ======= input style end ======= -->
                         </div>
-                        <!-- end row -->
                     </div>
-                </form>
+                    <!-- end row -->
+                </div>
                 <!-- end input -->
             </div>
             <!-- End Row -->

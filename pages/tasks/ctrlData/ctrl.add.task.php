@@ -36,7 +36,7 @@ if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] == 0) {
 
         move_uploaded_file(
             $tmpName,
-            "../../../uploads/" . $attachment
+            "../../../uploads/attachments/" . $attachment
         );
     }
 }

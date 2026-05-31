@@ -1,5 +1,4 @@
 <?php
-
 include "../../includes/conn.php";
 
 if(isset($_GET['id']))
@@ -16,11 +15,12 @@ if(isset($_GET['id']))
 
     if(!empty($row['task_image']))
     {
-        $file = "../../uploads/".$row['task_image'];
+        $file = "../../uploads/attachments/".$row['task_image'];
 
         if(file_exists($file))
         {
             unlink($file);
+            echo 'deleted';
         }
 
         mysqli_query($conn,"
@@ -30,6 +30,6 @@ if(isset($_GET['id']))
         ");
     }
 
-    header("Location: task.view.php?id=".$task_id);
+    header("Location: edit.task.php?task_id=".$task_id);
     exit();
 }

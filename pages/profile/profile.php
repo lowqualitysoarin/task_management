@@ -102,9 +102,7 @@
                             </div>
                             <div class="input-style-1">
                                 <label>Bio</label>
-                                <textarea rows="4" readonly>
-                                    <?php echo $user['bio']; ?>
-                                </textarea>
+                                <textarea class="text-start form-control" rows="4" readonly><?php echo $user['bio']; ?></textarea>
                             </div>
                         </div>
                     </div>

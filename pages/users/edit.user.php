@@ -198,9 +198,7 @@
                                         <div class="col">
                                             <div class="input-style-1">
                                                 <label>Bio / Profile Description</label>
-                                                <textarea placeholder="Write your bio here" rows="4" name="bio">
-                                                        <?php echo $user['bio']; ?>
-                                                    </textarea>
+                                                <textarea class="text-start" placeholder="Write your bio here" rows="4" name="bio"><?php echo $user['bio']; ?></textarea>
                                             </div>
                                         </div>
                                     </div>

@@ -116,21 +116,30 @@
 
                                         <?php
                                         $query = "
-SELECT tasks_tbl.*, task_status_tbl.status, users_tbl.full_name
-FROM tasks_tbl
-LEFT JOIN task_status_tbl ON task_status_tbl.status_id = tasks_tbl.task_status
-LEFT JOIN users_tbl ON users_tbl.user_id = tasks_tbl.assigned_user_id
-";
+                                        SELECT tasks_tbl.*, task_status_tbl.status
+                                        FROM tasks_tbl
+                                        LEFT JOIN task_status_tbl ON task_status_tbl.status_id = tasks_tbl.task_status
+                                        ";
 
-                                        if (isset($_SESSION['role']) && $_SESSION['role'] == "Member") {
-                                            $user_id = $_SESSION['user_id'];
-                                            $query .= " WHERE assigned_user_id = '$user_id'";
+                                        function can_view_task($conn, $task_id, $user_id, $role): bool
+                                        {
+                                            if ($role == "Admin")
+                                                return true;
+
+                                            $task_members = [];
+                                            $select_task_members = mysqli_query($conn, "SELECT * FROM task_members_tbl LEFT JOIN users_tbl ON users_tbl.user_id = task_members_tbl.user_id WHERE task_members_tbl.task_id = '$task_id'");
+                                            while ($row = mysqli_fetch_array($select_task_members)) {
+                                                $task_members[] = $row['user_id'];
+                                            }
+
+                                            return in_array($user_id, $task_members);
                                         }
 
+                                        $user_id = $_SESSION['user_id'];
+                                        $role = $_SESSION['role'];
+
                                         $tasks = mysqli_query($conn, $query);
-
                                         while ($task = mysqli_fetch_array($tasks)) {
-
                                             $status_color = match ((int) $task['task_status']) {
                                                 1 => "info-btn",
                                                 2 => "active-btn",
@@ -139,144 +148,134 @@ LEFT JOIN users_tbl ON users_tbl.user_id = tasks_tbl.assigned_user_id
                                                 default => "secondary-btn"
                                             };
 
-                                            $assigned_member = (!empty($task['full_name'])) ? $task['full_name'] : "None";
-                                            ?>
+                                            if (can_view_task($conn, $task['task_id'], $user_id, $role)) {
+                                                ?>
 
-                                            <tr>
+                                                <tr>
 
-                                                <td><?php echo $task['task_name']; ?></td>
+                                                    <td><?php echo $task['task_name']; ?></td>
 
-                                                <td><?php echo $task['task_description']; ?></td>
+                                                    <td><?php echo $task['task_description']; ?></td>
 
-                                                <td>
-                                                    <span class="status-btn <?php echo $status_color; ?>">
-                                                        <?php echo $task['status']; ?>
-                                                    </span>
-                                                </td>
+                                                    <td>
+                                                        <span class="status-btn <?php echo $status_color; ?>">
+                                                            <?php echo $task['status']; ?>
+                                                        </span>
+                                                    </td>
 
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <?php
-                                                        $task_id = $task['task_id'];
-
-                                                        $select_members = mysqli_query($conn, "SELECT * FROM task_members_tbl LEFT JOIN users_tbl ON users_tbl.user_id = task_members_tbl.user_id WHERE task_id = '$task_id'");
-                                                        while ($row = mysqli_fetch_array($select_members)) {
-                                                            ?>
-                                                            <div class="text-center mx-1">
-                                                                <img class="rounded rounded-circle"
-                                                                    src="<?php echo get_user_profile_image($conn, $row['user_id']); ?>"
-                                                                    alt="<?php echo $row['full_name']; ?>"
-                                                                    title="<?php echo $row['full_name']; ?>"
-                                                                    style="width: 35px; height: 35px;" />
-                                                            </div>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
                                                             <?php
-                                                        }
-                                                        ?>
-                                                    </div>
-                                                </td>
+                                                            $task_id = $task['task_id'];
 
-                                                <!-- VIEW TASK (ICON ONLY) -->
-                                                <td>
-                                                    <div class="action">
-                                                        <a class="text-success lni lni-eye"
-                                                            href="../tasks/task.view.php?id=<?php echo $task['task_id']; ?>">
-                                                        </a>
-                                                    </div>
-                                                </td>
-
-                                                <!-- ACTION ONLY -->
-                                                <td>
-                                                    <div class="action">
-                                                        <a class="text-primary lni lni-popup" href="#"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#status-modal-<?php echo $task['task_id']; ?>">
-                                                        </a>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-
-                                            <!-- STATUS MODAL -->
-                                            <form
-                                                action="ctrlData/ctrl.update.status.php?task_id=<?php echo $task['task_id']; ?>"
-                                                method="POST">
-
-                                                <div class="modal fade" id="status-modal-<?php echo $task['task_id']; ?>"
-                                                    tabindex="-1">
-
-                                                    <div class="modal-dialog modal-dialog-centered modal-lg">
-
-                                                        <div class="modal-content">
-
-                                                            <div class="modal-header bg-primary">
-                                                                <h5 class="modal-title text-white">Project Status</h5>
-                                                            </div>
-
-                                                            <div class="modal-body">
-
-                                                                <p><strong>Task:</strong> <?php echo $task['task_name']; ?>
-                                                                </p>
-
-                                                                <p><strong>Assigned:</strong>
-                                                                    <?php echo $assigned_member; ?></p>
-
-                                                                <p><strong>Status:</strong>
-                                                                    <span class="status-btn <?php echo $status_color; ?>">
-                                                                        <?php echo $task['status']; ?>
-                                                                    </span>
-                                                                </p>
-
-                                                                <hr>
-
+                                                            $select_members = mysqli_query($conn, "SELECT * FROM task_members_tbl LEFT JOIN users_tbl ON users_tbl.user_id = task_members_tbl.user_id WHERE task_id = '$task_id'");
+                                                            while ($row = mysqli_fetch_array($select_members)) {
+                                                                ?>
+                                                                <div class="text-center mx-1">
+                                                                    <img class="rounded rounded-circle"
+                                                                        src="<?php echo get_user_profile_image($conn, $row['user_id']); ?>"
+                                                                        alt="<?php echo $row['full_name']; ?>"
+                                                                        title="<?php echo $row['full_name']; ?>"
+                                                                        style="width: 35px; height: 35px;" />
+                                                                </div>
                                                                 <?php
-                                                                $status_list = mysqli_query($conn, "SELECT * FROM task_status_tbl");
-                                                                while ($st = mysqli_fetch_array($status_list)) {
-                                                                    ?>
-                                                                    <div class="form-check">
-                                                                        <input type="radio" name="taskstatus"
-                                                                            value="<?php echo $st['status_id']; ?>" required>
-                                                                        <label><?php echo $st['status']; ?></label>
-                                                                        <?php if ($task['task_status'] == $st['status_id'])
-                                                                            echo "checked"; ?>>
-                                                                    </div>
-                                                                <?php } ?>
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                    </td>
+
+                                                    <!-- VIEW TASK (ICON ONLY) -->
+                                                    <td>
+                                                        <div class="action">
+                                                            <a class="text-success lni lni-eye"
+                                                                href="../tasks/task.view.php?id=<?php echo $task['task_id']; ?>">
+                                                            </a>
+                                                        </div>
+                                                    </td>
+
+                                                    <!-- ACTION ONLY -->
+                                                    <td>
+                                                        <div class="action">
+                                                            <a class="text-primary lni lni-popup" href="#"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#status-modal-<?php echo $task['task_id']; ?>">
+                                                            </a>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+
+                                                <!-- STATUS MODAL -->
+                                                <form
+                                                    action="ctrlData/ctrl.update.status.php?task_id=<?php echo $task['task_id']; ?>"
+                                                    method="POST">
+
+                                                    <div class="modal fade" id="status-modal-<?php echo $task['task_id']; ?>"
+                                                        tabindex="-1">
+
+                                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+
+                                                            <div class="modal-content">
+
+                                                                <div class="modal-header bg-primary">
+                                                                    <h5 class="modal-title text-white">Project Status</h5>
+                                                                </div>
+
+                                                                <div class="modal-body">
+
+                                                                    <p><strong>Task:</strong> <?php echo $task['task_name']; ?>
+                                                                    </p>
+
+                                                                    <p><strong>Status:</strong>
+                                                                        <span class="status-btn <?php echo $status_color; ?>">
+                                                                            <?php echo $task['status']; ?>
+                                                                        </span>
+                                                                    </p>
+
+                                                                    <hr>
+
+                                                                    <?php
+                                                                    $status_list = mysqli_query($conn, "SELECT * FROM task_status_tbl");
+                                                                    while ($st = mysqli_fetch_array($status_list)) {
+                                                                        ?>
+                                                                        <div class="form-check">
+                                                                            <input type="radio" name="taskstatus"
+                                                                                value="<?php echo $st['status_id']; ?>" required>
+                                                                            <label><?php echo $st['status']; ?></label>
+                                                                            <?php if ($task['task_status'] == $st['status_id'])
+                                                                                echo "checked"; ?>
+                                                                        </div>
+                                                                    <?php } ?>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                    <button type="submit" name="submit"
+                                                                        class="btn btn-primary">Save</button>
+                                                                </div>
 
                                                             </div>
 
-                                                            <<<<<<< HEAD <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary">Save</button>
                                                         </div>
-                                                        =======
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" name="submit"
-                                                                class="btn btn-primary">Save</button>
-                                                        </div>
-                                                        >>>>>>> e55685426f239b4ba9251bdd012c82a07d048527
 
                                                     </div>
 
-                                                </div>
+                                                </form>
 
-                                </div>
+                                            <?php }
+                                        } ?>
 
-                                </form>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                            <?php } ?>
-
-                            </tbody>
-                            </table>
                         </div>
 
                     </div>
+                </section>
 
-            </div>
-        </section>
-
-        <?php include_once "../../includes/elements/footer.php"; ?>
+                <?php include_once "../../includes/elements/footer.php"; ?>
 
     </main>
 

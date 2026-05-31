@@ -1,8 +1,8 @@
--- MariaDB dump 10.19  Distrib 10.4.32-MariaDB, for Linux (x86_64)
+-- MariaDB dump 10.19  Distrib 10.4.28-MariaDB, for osx10.10 (x86_64)
 --
 -- Host: localhost    Database: task_management
 -- ------------------------------------------------------
--- Server version	10.4.32-MariaDB
+-- Server version	10.4.28-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -102,7 +102,7 @@ CREATE TABLE `tasks_tbl` (
   `task_name` varchar(100) NOT NULL,
   `task_description` varchar(100) NOT NULL,
   `task_status` int(11) NOT NULL DEFAULT 1,
-  `assigned_user_id` int(11) DEFAULT 0,
+  `task_image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`task_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -113,7 +113,7 @@ CREATE TABLE `tasks_tbl` (
 
 LOCK TABLES `tasks_tbl` WRITE;
 /*!40000 ALTER TABLE `tasks_tbl` DISABLE KEYS */;
-INSERT INTO `tasks_tbl` VALUES (4,'A New Task','Tasky',1,6),(5,'Test Task Number 2','Another Test Task',2,0),(6,'Hellooooo','Hello Task',3,0),(7,'Omaygot','Ambatunat',4,0),(11,'Deersicle','._.',1,0);
+INSERT INTO `tasks_tbl` VALUES (4,'A New Task','Tasky',1,NULL),(5,'Test Task Number 2','Another Test Task',2,NULL),(6,'Hellooooo','Hello Task',3,NULL),(7,'Omaygot','Ambatunat',4,NULL),(11,'Deersicle','._.',1,NULL);
 /*!40000 ALTER TABLE `tasks_tbl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,7 +143,7 @@ CREATE TABLE `users_tbl` (
 
 LOCK TABLES `users_tbl` WRITE;
 /*!40000 ALTER TABLE `users_tbl` DISABLE KEYS */;
-INSERT INTO `users_tbl` VALUES (5,'Joshua Smith','joshsmith','joshsmith@email.com','$2y$10$hIi7a/1HZXfxoDVhAKNiNOyvsVQ7NRRfvUOQaJZEeYtEv/WVX7Yq2',1,NULL,'uploads/user_5_1780152775.png'),(6,'Mark Unremarkable','unremarkable','unremarkable@mail.com','$2y$10$sO190L0WuthS//le3wrbU.S2cjnws81AQ7JahLJyX8z2YoilEYm9q',2,NULL,'uploads/user_6_1780152986.png'),(7,'Mark Edward Fischbach','markiplier','mynameiswelcome@yahoo.com','$2y$10$SzppkHZa5glGDrXyVuvcMuLDWo6X3d4Gh950CP3yVWGdvaKAQgWZG',2,NULL,'uploads/user_7_1780153074.png');
+INSERT INTO `users_tbl` VALUES (5,'Joshua Smith','joshsmith','joshsmith@email.com','$2y$10$hIi7a/1HZXfxoDVhAKNiNOyvsVQ7NRRfvUOQaJZEeYtEv/WVX7Yq2',1,'test','uploads/profiles/user_5_1780251807.png'),(6,'Mark Unremarkable','unremarkable','unremarkable@mail.com','$2y$10$sO190L0WuthS//le3wrbU.S2cjnws81AQ7JahLJyX8z2YoilEYm9q',2,'test','uploads/profiles/user_6_1780251951.png'),(7,'Mark Edward Fischbach','markiplier','mynameiswelcome@yahoo.com','$2y$10$SzppkHZa5glGDrXyVuvcMuLDWo6X3d4Gh950CP3yVWGdvaKAQgWZG',2,'test','uploads/profiles/user_7_1780252012.png');
 /*!40000 ALTER TABLE `users_tbl` ENABLE KEYS */;
 UNLOCK TABLES;
 

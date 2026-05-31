@@ -58,7 +58,8 @@
                 </div>
                 <!-- ========== title-wrapper end ========== -->
 
-                <form action="ctrlData/ctrl.add.task.php" class="form-elements wrapper" method="POST" enctype="multipart/form-data">
+                <form action="ctrlData/ctrl.add.task.php" class="form-elements wrapper" method="POST"
+                    enctype="multipart/form-data">
                     <div class="form-elements-wrapper">
                         <div class="row">
                             <div class="col-lg-12">
@@ -87,20 +88,19 @@
                                     </div>
 
                                     <div class="row">
-                                    <div class="col">
-                                        <div class="input-style-1">
-                                            <label>Attachment</label>
+                                        <div class="col">
+                                            <div class="input-style-1">
+                                                <label>Attachment</label>
 
-                                            <input type="file"
-                                                name="attachment"
-                                                accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx">
+                                                <input type="file" name="attachment"
+                                                    accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx">
 
-                                            <small class="text-muted">
-                                                Allowed: JPG, PNG, PDF, DOC, DOCX, XLS, XLSX
-                                            </small>
+                                                <small class="text-muted">
+                                                    Allowed: JPG, PNG, PDF, DOC, DOCX, XLS, XLSX
+                                                </small>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
                                     <h6 class="mb-25">Assign Member</h6>
                                     <div class="row">
