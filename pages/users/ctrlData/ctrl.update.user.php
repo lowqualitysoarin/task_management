@@ -10,9 +10,7 @@ if (!isset($_GET['user_id'])) {
 
 $user_id = $_GET['user_id'];
 
-/* =========================
-   UPDATE USER INFO
-========================= */
+
 if (isset($_POST['submit'])) {
 
     $fullname = mysqli_real_escape_string($conn, $_POST['fullname']);
@@ -61,9 +59,7 @@ if (isset($_POST['submit'])) {
 }
 
 
-/* =========================
-   UPDATE PROFILE IMAGE
-========================= */
+
 if (isset($_POST['submitprofile'])) {
 
     $file = $_FILES['profileimage'];
@@ -103,9 +99,6 @@ if (isset($_POST['submitprofile'])) {
 }
 
 
-/* =========================
-   DELETE PROFILE IMAGE
-========================= */
 if (isset($_POST['deleteprofile'])) {
 
     $select_user = mysqli_query($conn, "SELECT * FROM users_tbl WHERE user_id = '$user_id'");
@@ -149,10 +142,6 @@ if (isset($_POST['submitbio'])) {
     exit();
 }
 
-
-/* =========================
-   FILE VALIDATION
-========================= */
 function is_file_valid($file): bool
 {
     if (!isset($file)) return false;
