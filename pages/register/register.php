@@ -25,7 +25,7 @@ session_start();
                         <div class="title text-center">
                             <h1 class="text-primary mb-10">Welcome!</h1>
                             <p class="text-medium">
-                                Create a account to continue
+                                Create an account to continue
                             </p>
                         </div>
                         <div class="cover-image">
@@ -111,11 +111,22 @@ session_start();
                             <!-- end col -->
 
                             <div class="col-12">
-                                <div class="button-group d-flex justify-content-center flex-wrap">
-                                    <button type="submit" name="submit" id="submit"
-                                        class="main-btn primary-btn btn-hover w-100 text-center">Register</button>
-                                </div>
-                            </div>
+                           <div class="button-group d-flex justify-content-center flex-wrap">
+                              <button type="submit" name="submit" id="submit"
+                               class="main-btn primary-btn btn-hover w-100 text-center">
+                               Register
+                         </button>
+                     </div>
+
+                     <div class="text-center mt-3">
+                         <p class="mb-0">
+                           Already have an account?
+                        <a href="../login/login.php" class="text-primary">
+                         Login Here
+                     </a>
+                     </p>
+                  </div>
+               </div>
                             <!-- end row -->
                         </form>
 

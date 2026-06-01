@@ -100,21 +100,21 @@ session_start();
                             <!-- end col -->
 
                             <div class="col-12">
-                                <div class="button-group d-flex justify-content-center flex-wrap">
-                                    <button type="submit" name="submit"
-                                        class="main-btn primary-btn btn-hover w-100 text-center">Login</button>
-                                </div>
-                            </div>
-                            <!-- end row -->
-                        </form>
+                          <div class="button-group d-flex justify-content-center flex-wrap">
+                           <button type="submit" name="submit"
+                              class="main-btn primary-btn btn-hover w-100 text-center">Login</button>
+                          </div>
 
-                    </div>
+                         <div class="text-center mt-3">
+                        <p class="mb-0">
+                               Don't have an account?
+                          <a href="../register/register.php" class="text-primary">
+                             Register Here
+                       </a>
+                      </p>
+                   </div>
                 </div>
-            </div>
-            <!-- end col -->
-        </div>
-        <!-- end row -->
-    </div>
+
     <!-- ========== signin-section end ========== -->
 
     <?php include_once "../../includes/components/scripts.php"; ?>
