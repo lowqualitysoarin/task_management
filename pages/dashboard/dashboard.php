@@ -107,7 +107,6 @@
                                             <th>Description</th>
                                             <th>Status</th>
                                             <th>Assigned Member</th>
-                                            <th>View Task</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -184,25 +183,18 @@
                                                         </div>
                                                     </td>
 
-                                                    <!-- VIEW TASK (ICON ONLY) -->
-                                                    <td>
-                                                        <div class="action">
-                                                            <a class="text-success lni lni-eye"
-                                                                href="../tasks/task.view.php?id=<?php echo $task['task_id']; ?>">
-                                                            </a>
-                                                        </div>
-                                                    </td>
-
                                                     <!-- ACTION ONLY -->
                                                     <td>
                                                         <div class="action">
-                                                            <a class="text-primary lni lni-popup" href="#"
+                                                            <a class="text-success lni lni-eye m-1"
+                                                                href="../tasks/task.view.php?id=<?php echo $task['task_id']; ?>">
+                                                            </a>
+                                                            <a class="text-primary lni lni-popup" href="#" m-1
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#status-modal-<?php echo $task['task_id']; ?>">
                                                             </a>
                                                         </div>
                                                     </td>
-
                                                 </tr>
 
                                                 <!-- STATUS MODAL -->

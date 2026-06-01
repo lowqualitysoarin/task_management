@@ -61,7 +61,6 @@ if (isset($_POST['submit'])) {
 
 
 if (isset($_POST['submitprofile'])) {
-
     $file = $_FILES['profileimage'];
 
     if (!is_file_valid($file)) {
@@ -104,7 +103,7 @@ if (isset($_POST['deleteprofile'])) {
     $select_user = mysqli_query($conn, "SELECT * FROM users_tbl WHERE user_id = '$user_id'");
     $user = mysqli_fetch_array($select_user);
 
-    $abs_file_path = $_SERVER['DOCUMENT_ROOT'] . '/task_management/' . $user['profile'];
+    $abs_file_path = $_SERVER['DOCUMENT_ROOT'] . '/task_management/profiles/' . $user['profile'];
 
     if (!empty($user['profile']) && file_exists($abs_file_path)) {
         unlink($abs_file_path);

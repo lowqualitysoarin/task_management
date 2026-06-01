@@ -39,7 +39,6 @@ if (isset($_POST['submit'])) {
 if (isset($_POST['submitattachment'])) {
     $attachment = NULL;
     if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] == 0) {
-
         $allowed = [
             'jpg',
             'jpeg',
