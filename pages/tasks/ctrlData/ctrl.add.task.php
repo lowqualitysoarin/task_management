@@ -9,20 +9,29 @@ if (!isset($_POST['submit'])) {
 
 $task_name = mysqli_real_escape_string($conn, $_POST['taskname']);
 $task_description = mysqli_real_escape_string($conn, $_POST['taskdescription']);
-$assigned_member = isset($_POST['assignedmember']) ? $_POST['assignedmember'] : 0;
+
 $assignees = isset($_POST['assignees']) ? $_POST['assignees'] : [];
 
+
+$task_status = 1;
+
 /*
- UPLOAD ATTACHMENT
+| UPLOAD ATTACHMENT
 */
 $attachment = NULL;
 
 if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] == 0) {
 
     $allowed = [
-        'jpg', 'jpeg', 'png', 'gif',
-        'pdf', 'doc', 'docx',
-        'xls', 'xlsx'
+        'jpg',
+        'jpeg',
+        'png',
+        'gif',
+        'pdf',
+        'doc',
+        'docx',
+        'xls',
+        'xlsx'
     ];
 
     $fileName = $_FILES['attachment']['name'];
@@ -42,7 +51,7 @@ if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] == 0) {
 }
 
 /*
- GET NEXT TASK ID
+| GET NEXT TASK ID
 */
 $next_id = 1;
 
@@ -56,7 +65,7 @@ $id_query = mysqli_query(
 
 if ($id_query) {
     $id_row = mysqli_fetch_array($id_query);
-    $next_id = (int) $id_row['AUTO_INCREMENT'];
+    $next_id = (int)$id_row['AUTO_INCREMENT'];
 }
 
 /*
@@ -75,7 +84,7 @@ mysqli_query(
     (
         '$task_name',
         '$task_description',
-        '$assigned_member',
+        '$task_status',
         '$attachment'
     )"
 );
@@ -100,6 +109,9 @@ foreach ($assignees as $user_id) {
     );
 }
 
+/*
+| SUCCESS MESSAGE
+*/
 $_SESSION['success'] = "Task added successfully.";
 
 header("location: ../list.task.php");
