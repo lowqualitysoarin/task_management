@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 110409
 File Encoding         : 65001
 
-Date: 2026-06-01 07:22:56
+Date: 2026-06-01 11:37:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,7 +42,7 @@ CREATE TABLE `tasks_tbl` (
   `task_status` int(11) NOT NULL DEFAULT 1,
   `task_image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`task_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of tasks_tbl
@@ -51,8 +51,7 @@ INSERT INTO `tasks_tbl` VALUES ('4', 'A New Task', 'Tasky', '1', null);
 INSERT INTO `tasks_tbl` VALUES ('5', 'Test Task Number 2', 'Another Test Task', '2', null);
 INSERT INTO `tasks_tbl` VALUES ('6', 'Hellooooo', 'Hello Task', '3', null);
 INSERT INTO `tasks_tbl` VALUES ('7', 'Omaygot', 'Ambatunat', '4', null);
-INSERT INTO `tasks_tbl` VALUES ('11', 'Deersicle', '._.', '1', null);
-INSERT INTO `tasks_tbl` VALUES ('12', 'GAYVIN BASKETBALL', 'sjihais;kahSAKnaKND.MAN,MNDA,', '2', '1780269383_2024_Acer_Consumer_Default_3840x2400.jpg');
+INSERT INTO `tasks_tbl` VALUES ('11', 'Deersicle', '._.', '2', '');
 
 -- ----------------------------
 -- Table structure for `task_members_tbl`
@@ -72,8 +71,6 @@ CREATE TABLE `task_members_tbl` (
 -- ----------------------------
 INSERT INTO `task_members_tbl` VALUES ('11', '6');
 INSERT INTO `task_members_tbl` VALUES ('11', '7');
-INSERT INTO `task_members_tbl` VALUES ('12', '6');
-INSERT INTO `task_members_tbl` VALUES ('12', '7');
 
 -- ----------------------------
 -- Table structure for `task_status_tbl`
@@ -107,11 +104,12 @@ CREATE TABLE `users_tbl` (
   `bio` varchar(255) DEFAULT NULL,
   `profile` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of users_tbl
 -- ----------------------------
-INSERT INTO `users_tbl` VALUES ('5', 'Joshua Smith', 'joshsmith', 'joshsmith@email.com', '$2y$10$hIi7a/1HZXfxoDVhAKNiNOyvsVQ7NRRfvUOQaJZEeYtEv/WVX7Yq2', '1', 'test', 'uploads/profiles/user_5_1780251807.png');
-INSERT INTO `users_tbl` VALUES ('6', 'Mark Unremarkable', 'unremarkable', 'unremarkable@mail.com', '$2y$10$sO190L0WuthS//le3wrbU.S2cjnws81AQ7JahLJyX8z2YoilEYm9q', '2', 'test', 'uploads/profiles/user_6_1780251951.png');
-INSERT INTO `users_tbl` VALUES ('7', 'Mark Edward Fischbach', 'markiplier', 'mynameiswelcome@yahoo.com', '$2y$10$SzppkHZa5glGDrXyVuvcMuLDWo6X3d4Gh950CP3yVWGdvaKAQgWZG', '2', 'test', 'uploads/profiles/user_7_1780252012.png');
+INSERT INTO `users_tbl` VALUES ('5', 'Joshua Smith', 'joshsmith', 'joshsmith@email.com', '$2y$10$hIi7a/1HZXfxoDVhAKNiNOyvsVQ7NRRfvUOQaJZEeYtEv/WVX7Yq2', '1', 'houoyoyo', 'uploads/profiles/user_5_1780251807.png');
+INSERT INTO `users_tbl` VALUES ('6', 'Mark Unremarkable', 'unremarkable', 'unremarkable@mail.com', '$2y$10$sO190L0WuthS//le3wrbU.S2cjnws81AQ7JahLJyX8z2YoilEYm9q', '2', 'hii', 'uploads/profiles/user_6_1780251951.png');
+INSERT INTO `users_tbl` VALUES ('7', 'Mark Edward Fischbach', 'markiplier', 'mynameiswelcome@yahoo.com', '$2y$10$SzppkHZa5glGDrXyVuvcMuLDWo6X3d4Gh950CP3yVWGdvaKAQgWZG', '2', 'im dead', 'uploads/profiles/user_7_1780252012.png');
+INSERT INTO `users_tbl` VALUES ('8', 'Emu otori', 'emu', 'taeko@gmail.com', '$2y$10$jaeLQfCvXhJNLL.2X0zcaec.dTaYs.bhOML0A2/9QR/9ofsxkPPfq', '1', 'hii', 'uploads/profiles/user_8_1780282683.jpg');

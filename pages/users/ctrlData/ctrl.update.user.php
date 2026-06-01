@@ -4,13 +4,17 @@ require_once "../../../includes/conn.php";
 include "../../../includes/session.start.php";
 
 if (!isset($_GET['user_id'])) {
-    header('../list.user.php');
+    header("Location: ../list.user.php");
     exit();
 }
 
 $user_id = $_GET['user_id'];
 
+/* =========================
+   UPDATE USER INFO
+========================= */
 if (isset($_POST['submit'])) {
+
     $fullname = mysqli_real_escape_string($conn, $_POST['fullname']);
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -21,7 +25,6 @@ if (isset($_POST['submit'])) {
     } else {
         $get_role = mysqli_query($conn, "SELECT role FROM users_tbl WHERE user_id = '$user_id'");
         $role_data = mysqli_fetch_assoc($get_role);
-
         $role = $role_data['role'];
     }
 
@@ -37,98 +40,127 @@ if (isset($_POST['submit'])) {
     ");
 
     if ($update_user) {
+
         if ($_SESSION['user_id'] == $user_id) {
             $_SESSION['fullname'] = $fullname;
 
-            // sync session role properly
-            if ($role == 1) {
-                $_SESSION['role'] = 'Admin';
-            } else {
-                $_SESSION['role'] = 'Member';
-            }
+            $_SESSION['role'] = ($role == 1) ? 'Admin' : 'Member';
         }
 
+        $_SESSION['success'] = "User updated successfully.";
+
         if ($_SESSION['role'] == 'Admin') {
-            $_SESSION['success'] = "User updated successfully.";
-            header("location: ../list.user.php");
-            exit();
+            header("Location: ../list.user.php");
         } else {
-            $_SESSION['success'] = "Profile updated successfully.";
-            header("location: ../../dashboard/dashboard.php");
-            exit();
+            header("Location: ../../dashboard/dashboard.php");
         }
+        exit();
     } else {
         echo "Failed to update user: " . mysqli_error($conn);
     }
-} 
+}
 
+
+/* =========================
+   UPDATE PROFILE IMAGE
+========================= */
 if (isset($_POST['submitprofile'])) {
+
     $file = $_FILES['profileimage'];
 
     if (!is_file_valid($file)) {
-        header('../edit.user.php?user_id=' . (string) $user_id);
+        header("Location: ../edit.user.php?user_id=" . $user_id);
         exit();
     }
 
     $file_name = $file['name'];
     $file_temp_name = $file['tmp_name'];
-    $file_size = $file['size'];
-    $file_error = $file['error'];
 
     $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-    $allowed_ext = ['jpg', 'jpeg', 'png'];
-
     $new_file_name = "user_" . $user_id . "_" . time() . "." . $file_ext;
 
     $upload_file_path = $_SERVER['DOCUMENT_ROOT'] . '/task_management/uploads/profiles/' . $new_file_name;
     $file_path = "uploads/profiles/" . $new_file_name;
 
     if (move_uploaded_file($file_temp_name, $upload_file_path)) {
-        $query = mysqli_query($conn, "UPDATE users_tbl SET profile = '$file_path' WHERE user_id = '$user_id'");
+
+        $query = mysqli_query($conn, "
+            UPDATE users_tbl 
+            SET profile = '$file_path' 
+            WHERE user_id = '$user_id'
+        ");
+
         if ($query) {
             header("Location: ../edit.user.php?user_id=" . $user_id);
             exit();
         } else {
             echo "Database error.";
         }
+
     } else {
         echo "Failed to move uploaded file.";
     }
 }
 
+
+/* =========================
+   DELETE PROFILE IMAGE
+========================= */
 if (isset($_POST['deleteprofile'])) {
+
     $select_user = mysqli_query($conn, "SELECT * FROM users_tbl WHERE user_id = '$user_id'");
     $user = mysqli_fetch_array($select_user);
 
     $abs_file_path = $_SERVER['DOCUMENT_ROOT'] . '/task_management/' . $user['profile'];
-    if (isset($user['profile']) && file_exists($abs_file_path)) {
+
+    if (!empty($user['profile']) && file_exists($abs_file_path)) {
         unlink($abs_file_path);
     }
 
-    mysqli_query($conn, "UPDATE users_tbl SET profile = null WHERE user_id = '$user_id'");
+    mysqli_query($conn, "UPDATE users_tbl SET profile = NULL WHERE user_id = '$user_id'");
+
     header("Location: ../edit.user.php?user_id=" . $user_id);
     exit();
 }
 
+
+/* =========================
+   UPDATE BIO (FIXED)
+   → THIS IS YOUR ISSUE FIX
+========================= */
 if (isset($_POST['submitbio'])) {
-    $select_user = mysqli_query($conn, "SELECT * FROM users_tbl WHERE user_id = '$user_id'");
-    $user = mysqli_fetch_array($select_user);
 
     $bio = mysqli_real_escape_string($conn, $_POST['bio']);
-    mysqli_query($conn, "UPDATE users_tbl SET bio = '$bio'");
 
+    $update_bio = mysqli_query($conn, "
+        UPDATE users_tbl
+        SET bio = '$bio'
+        WHERE user_id = '$user_id'
+    ");
+
+    if ($update_bio) {
+        $_SESSION['success'] = "Bio updated successfully.";
+    } else {
+        $_SESSION['error'] = "Failed to update bio.";
+    }
+
+    // IMPORTANT: redirect back to PROFILE (where alert should show)
     header("Location: ../../profile/profile.php?user_id=" . $user_id);
     exit();
 }
 
-function is_file_valid($file) : bool {
+
+/* =========================
+   FILE VALIDATION
+========================= */
+function is_file_valid($file): bool
+{
     if (!isset($file)) return false;
 
-    $file_name = $file['name'];
-    $file_size = $file['size'];
     $file_error = $file['error'];
+    $file_size  = $file['size'];
 
-    $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+    $file_ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
     $allowed_ext = ['jpg', 'jpeg', 'png'];
 
     if ($file_error !== 0) return false;
