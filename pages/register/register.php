@@ -13,12 +13,52 @@ session_start();
     <title>Task Management | Register</title>
 
     <?php include_once "../../includes/components/links.php"; ?>
-</head>
 
+               </head>
+            <style>
+            .signin-wrapper{
+             width:100%;
+             max-width:450px;
+           }
+
+           .input-style-1{
+              margin-bottom:8px !important;
+           }
+
+           .input-style-1 label{
+           margin-bottom:3px;
+           font-size:14px;
+          }
+
+          .input-style-1 input{
+           height:45px !important;
+          }
+
+         .cover-image img{
+           max-width:70%;
+          display:block;
+        margin:auto;
+         }
+
+          .form-wrapper h6{
+              margin-bottom:5px !important;
+         }
+
+            .form-wrapper .text-sm{
+              margin-bottom:12px !important;
+           }
+
+               #passwordfeedback{
+               margin-top:3px;
+               margin-bottom:0;
+               font-size:12px;
+             }
+            </style>
+          </head>
 <body>
     <!-- ========== signin-section start ========== -->
-    <div class="container-fluid g-0 vh-100 d-flex flex-column">
-        <div class="row g-0 auth-row vh-100">
+     <div class="container-fluid g-0 min-vh-100">
+    <div class="row g-0 min-vh-100">
             <div class="col-lg-6">
                 <div class="auth-cover-wrapper bg-primary-100">
                     <div class="auth-cover">
