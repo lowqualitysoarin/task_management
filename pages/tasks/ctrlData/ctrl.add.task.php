@@ -78,17 +78,18 @@ mysqli_query(
         task_name,
         task_description,
         task_status,
-        task_image
+        task_image,
+        task_submit
     )
     VALUES
     (
         '$task_name',
         '$task_description',
         '$task_status',
-        '$attachment'
+        '$attachment',
+        0
     )"
 );
-
 /*
 | INSERT TASK MEMBERS
 */
