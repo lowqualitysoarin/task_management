@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
-
 <?php
+session_start();
+
 require_once "../../includes/conn.php";
 include_once "../../includes/utils/user.utils.php";
 
@@ -22,32 +22,53 @@ if (!$task) {
     die("Task not found.");
 }
 
-// STATUS
+/*
+| GET USER ROLE
+| users_tbl.role stores role_id: 1 = admin, 2 = member
+*/
+$session_user_id = $_SESSION['user_id'];
+
+$role_query = mysqli_query($conn, "
+    SELECT role
+    FROM users_tbl
+    WHERE user_id = '$session_user_id'
+");
+
+$role_data = mysqli_fetch_assoc($role_query);
+
+$role_id = $role_data['role'] ?? null; // Returns 1 (admin) or 2 (member)
+
+/*
+| STATUS
+*/
 switch ($task['task_status']) {
     case 1:
         $statusText = "Pending";
         $statusClass = "pending";
         break;
-
     case 2:
         $statusText = "In Progress";
         $statusClass = "ongoing";
         break;
-
     case 3:
         $statusText = "Completed";
         $statusClass = "done";
         break;
-
     case 4:
         $statusText = "Incomplete";
         $statusClass = "urgent";
         break;
-
     default:
         $statusText = "Unknown";
         $statusClass = "pending";
 }
+
+/*
+| SUBMISSION CHECK VARIABLES
+*/
+$hasText = !empty($task['submission_text']);
+$hasFile = !empty($task['task_submit']);
+$hasSubmission = $hasText || $hasFile;
 ?>
 
 <!DOCTYPE html>
@@ -56,17 +77,11 @@ switch ($task['task_status']) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Task View</title>
-
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css">
-
     <style>
-        /* =========================
-   GLOBAL
-========================= */
-
         * {
             margin: 0;
             padding: 0;
@@ -79,19 +94,11 @@ switch ($task['task_status']) {
             color: #1f2937;
         }
 
-        /* =========================
-   WRAPPER
-========================= */
-
         .wrapper {
             max-width: 1400px;
             margin: auto;
             padding: 30px;
         }
-
-        /* =========================
-   TOPBAR
-========================= */
 
         .topbar {
             display: flex;
@@ -113,10 +120,6 @@ switch ($task['task_status']) {
             color: #4f46e5;
         }
 
-        /* =========================
-   HEADER
-========================= */
-
         .header {
             display: flex;
             justify-content: space-between;
@@ -136,8 +139,6 @@ switch ($task['task_status']) {
             font-size: 15px;
             line-height: 1.7;
         }
-
-        /* STATUS BADGE */
 
         .status-badge {
             padding: 14px 24px;
@@ -165,10 +166,6 @@ switch ($task['task_status']) {
             background: #ef4444;
         }
 
-        /* =========================
-   TAGS
-========================= */
-
         .tags {
             display: flex;
             gap: 10px;
@@ -185,10 +182,6 @@ switch ($task['task_status']) {
             font-weight: 600;
         }
 
-        /* =========================
-   GRID
-========================= */
-
         .content-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -200,10 +193,6 @@ switch ($task['task_status']) {
                 grid-template-columns: 1fr;
             }
         }
-
-        /* =========================
-   CARD
-========================= */
 
         .card {
             background: #fff;
@@ -227,19 +216,11 @@ switch ($task['task_status']) {
             font-size: 22px;
         }
 
-        /* =========================
-   DESCRIPTION
-========================= */
-
         .description {
             line-height: 1.9;
             color: #4b5563;
             font-size: 15px;
         }
-
-        /* =========================
-   INFO LIST
-========================= */
 
         .info-list {
             display: flex;
@@ -270,57 +251,6 @@ switch ($task['task_status']) {
             text-align: right;
         }
 
-        /* =========================
-   IMAGE GALLERY
-========================= */
-
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 18px;
-        }
-
-        .image-card {
-            background: #f9fafb;
-            border-radius: 18px;
-            overflow: hidden;
-            transition: 0.3s;
-            cursor: pointer;
-            border: 1px solid #ececec;
-        }
-
-        .image-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .image-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-
-        .image-info {
-            padding: 12px;
-        }
-
-        .image-name {
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .image-size {
-            font-size: 12px;
-            color: #888;
-        }
-
-        /* =========================
-   EMPTY IMAGE
-========================= */
-
         .no-image {
             background: #f9fafb;
             border: 2px dashed #ddd;
@@ -335,69 +265,38 @@ switch ($task['task_status']) {
             margin-bottom: 10px;
         }
 
-        /* =========================
-   LIGHTBOX
-========================= */
-
-        .lightbox {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            padding: 20px;
+        .btn {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white !important;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            margin-right: 5px;
         }
 
-        .lightbox img {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 15px;
+        .btn-primary {
+            background: #4f46e5 !important;
         }
 
-        .btn{
-    display:inline-block;
-    padding:8px 15px;
-    border-radius:8px;
-    text-decoration:none;
-    color:white;
-    font-size:13px;
-    border:none;
-    cursor:pointer;
-    margin-right:5px;
-}
+        .btn-success {
+            background: #10b981 !important;
+        }
 
-.btn-primary{
-    background:#4f46e5;
-}
+        .btn-danger {
+            background: #ef4444 !important;
+        }
 
-.btn-success{
-    background:#10b981;
-}
+        textarea.form-control {
+            border-radius: 10px;
+            padding: 15px;
+        }
 
-.btn-danger{
-    background:#ef4444;
-}
-
-        /* =========================
-   RESPONSIVE
-========================= */
-
-        @media(max-width:768px) {
-
-            .wrapper {
-                padding: 20px;
-            }
-
-            .title-area h1 {
-                font-size: 28px;
-            }
-
-            .status-badge {
-                width: 100%;
-            }
-
+        input.form-control {
+            border-radius: 10px;
+            padding: 10px;
         }
     </style>
 </head>
@@ -409,137 +308,219 @@ switch ($task['task_status']) {
         <!-- TOPBAR -->
         <div class="topbar">
             <a href="../dashboard/dashboard.php" class="back-btn">
-                <i class="las la-arrow-left"></i>
-                Back to Dashboard
+                <i class="las la-arrow-left"></i> Back to Dashboard
             </a>
         </div>
 
         <!-- HEADER -->
         <div class="header">
-
             <div class="title-area">
-
-                <h1>
-                    <?php echo htmlspecialchars($task['task_name']); ?>
-                </h1>
-
-                <p>
-                    Detailed task overview and attachment preview for assigned members.
-                </p>
-
+                <h1><?php echo htmlspecialchars($task['task_name']); ?></h1>
+                <p>Detailed task overview and attachment preview for assigned members.</p>
             </div>
-
             <div class="status-badge <?php echo $statusClass; ?>">
                 <?php echo $statusText; ?>
             </div>
-
         </div>
 
         <!-- TAGS -->
         <div class="tags">
-
-            <div class="tag">
-                Task #<?php echo $task['task_id']; ?>
-            </div>
-
-            <div class="tag">
-                Assigned Task
-            </div>
-
-            <div class="tag">
-                Project Management
-            </div>
-
+            <div class="tag">Task #<?php echo $task['task_id']; ?></div>
+            <div class="tag">Assigned Task</div>
+            <div class="tag">Project Management</div>
         </div>
 
         <!-- GRID -->
         <div class="content-grid">
 
-            <!-- LEFT -->
+            <!-- LEFT COLUMN -->
             <div>
-
                 <!-- DESCRIPTION -->
                 <div class="card">
-
                     <div class="card-title">
-                        <i class="las la-file-alt"></i>
-                        Description
+                        <i class="las la-file-alt"></i> Description
                     </div>
-
                     <div class="description">
                         <?php echo nl2br(htmlspecialchars($task['task_description'])); ?>
                     </div>
-
                 </div>
 
                 <!-- ATTACHMENTS -->
                 <div class="card">
-
                     <div class="card-title">
-                        <i class="las la-paperclip"></i>
-                        Attachments
+                        <i class="las la-paperclip"></i> Attachments
+                    </div>
+                    <?php if (!empty($task['task_image'])) { ?>
+                        <a href="../../uploads/attachments/<?php echo $task['task_image']; ?>" target="_blank"
+                            class="btn btn-success">
+                            <i class="las la-eye"></i> View Attachment
+                        </a>
+                    <?php } else { ?>
+                        <div class="no-image">
+                            <i class="las la-image"></i>
+                            <p>No attachment uploaded.</p>
+                        </div>
+                    <?php } ?>
+                </div>
+
+                <!-- TASK SUBMISSION -->
+                <div class="card">
+                    <div class="card-title">
+                        <i class="las la-upload"></i> Task Submission
                     </div>
 
-                    <?php if (!empty($task['task_image'])) { ?>
+                    <!-- ================= MEMBER ================= -->
+                    <?php if ($role_id == 2) { ?>
 
-                        <a href="../../uploads/attachments/<?php echo $task['task_image']; ?>"
-                        target="_blank"
-                        class="btn btn-success">
+                        <?php if (empty($task['submission_text']) && empty($task['task_submit'])) { ?>
 
-                            View Attachment
+                            <!-- SUBMIT FORM -->
+                            <form action="ctrlData/ctrl.add.submission.php?id=<?php echo $task_id; ?>" method="POST"
+                                enctype="multipart/form-data">
 
-                        </a>
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Submission Text</strong></label>
+                                    <textarea name="submission_text" class="form-control" rows="5"
+                                        placeholder="Write your submission here..."></textarea>
+                                </div>
 
-                    <?php } else { ?>
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Attachment (optional)</strong></label>
+                                    <input type="file" name="submission_attachment" class="form-control">
+                                </div>
 
-                        <div class="no-image">
+                                <button type="submit" name="submit" class="btn btn-primary">
+                                    Submit Task
+                                </button>
 
-                            <i class="las la-image"></i>
+                            </form>
 
-                            <p>No attachment uploaded.</p>
+                        <?php } else { ?>
 
-                        </div>
+                            <!-- VIEW SUBMISSION -->
+                            <?php if (!empty($task['submission_text'])) { ?>
+                                <div class="mb-3">
+                                    <strong>Submission Text:</strong>
+                                    <div class="p-3 bg-light rounded">
+                                        <?php echo nl2br(htmlspecialchars($task['submission_text'])); ?>
+                                    </div>
+                                </div>
+                            <?php } ?>
+
+                            <?php if (!empty($task['task_submit'])) { ?>
+
+                                <div class="mt-3">
+
+                                    <strong>Attachment Actions:</strong>
+
+                                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+
+                                        <!-- VIEW BUTTON -->
+                                        <a href="../../uploads/submissions/<?php echo $task['task_submit']; ?>" target="_blank"
+                                            class="btn btn-success">
+
+                                            <i class="las la-eye"></i>
+
+                                            View Attachment
+
+                                        </a>
+
+                                        <!-- DELETE BUTTON -->
+                                        <a href="ctrlData/ctrl.delete.submission.php?id=<?php echo $task_id; ?>"
+                                            class="btn btn-danger" onclick="return confirm('Delete submission?')">
+
+                                            <i class="las la-trash"></i>
+
+                                            Delete Submission
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            <?php } ?>
+
+                        <?php } ?>
+
+                    <?php } ?>
+
+                    <!-- ================= ADMIN ================= -->
+                    <?php if ($role_id == 1) { ?>
+
+                        <?php if (!empty($task['submission_text']) || !empty($task['task_submit'])) { ?>
+
+                            <?php if (!empty($task['submission_text'])) { ?>
+                                <div class="mb-3">
+                                    <strong>Submission Text:</strong>
+                                    <div class="p-3 bg-light rounded">
+                                        <?php echo nl2br(htmlspecialchars($task['submission_text'])); ?>
+                                    </div>
+                                </div>
+                            <?php } ?>
+
+                            <?php if (!empty($task['task_submit'])) { ?>
+                                 <a href="../../uploads/submissions/<?php echo $task['task_submit']; ?>" target="_blank"
+                                            class="btn btn-success">
+
+                                            <i class="las la-eye"></i>
+
+                                            View Attachment
+
+                                        </a>
+                            <?php } ?>
+
+                            <div class="mt-2">
+                                <strong>Submitted By:</strong>
+                                <?php echo htmlspecialchars($task['submitted_by'] ?? 'Unknown'); ?>
+                            </div>
+
+                        <?php } else { ?>
+
+                            <div class="no-image">
+                                No submission yet
+                            </div>
+
+                        <?php } ?>
 
                     <?php } ?>
 
                 </div>
+                <!-- END TASK SUBMISSION -->
 
             </div>
+            <!-- END LEFT COLUMN -->
 
-            <!-- RIGHT -->
+            <!-- RIGHT COLUMN -->
             <div>
-
                 <!-- TASK INFO -->
                 <div class="card">
-
                     <div class="card-title">
-                        <i class="las la-info-circle"></i>
-                        Task Information
+                        <i class="las la-info-circle"></i> Task Information
                     </div>
-
                     <div class="info-list">
-
                         <div class="info-item">
                             <div class="info-label">Assigned Member</div>
                             <div class="info-value">
                                 <div class="d-flex align-items-center">
                                     <?php
-                                    $task_id = $task['task_id'];
-
-                                    $select_members = mysqli_query($conn, "SELECT * FROM task_members_tbl LEFT JOIN users_tbl ON users_tbl.user_id = task_members_tbl.user_id WHERE task_id = '$task_id'");
+                                    $select_members = mysqli_query($conn, "
+                                        SELECT * FROM task_members_tbl
+                                        LEFT JOIN users_tbl ON users_tbl.user_id = task_members_tbl.user_id
+                                        WHERE task_id = '$task_id'
+                                    ");
                                     $members_num = mysqli_num_rows($select_members);
 
                                     if ($members_num != 0) {
                                         while ($row = mysqli_fetch_array($select_members)) {
                                             ?>
-                                                <div class="text-center mx-1">
-                                                    <img class="rounded rounded-circle"
-                                                        src="<?php echo get_user_profile_image($conn, $row['user_id']); ?>"
-                                                        alt="<?php echo $row['full_name']; ?>"
-                                                        title="<?php echo $row['full_name']; ?>"
-                                                        style="width: 35px; height: 35px;" />
-                                                </div>
-                                                <?php
+                                            <div class="text-center mx-1">
+                                                <img class="rounded-circle"
+                                                    src="<?php echo get_user_profile_image($conn, $row['user_id']); ?>"
+                                                    alt="<?php echo $row['full_name']; ?>"
+                                                    title="<?php echo $row['full_name']; ?>" style="width:35px; height:35px;">
+                                            </div>
+                                            <?php
                                         }
                                     } else {
                                         echo 'No Assignees';
@@ -548,58 +529,30 @@ switch ($task['task_status']) {
                                 </div>
                             </div>
                         </div>
-
                         <div class="info-item">
                             <div class="info-label">Task ID</div>
-                            <div class="info-value">
-                                #<?php echo $task['task_id']; ?>
-                            </div>
+                            <div class="info-value">#<?php echo $task['task_id']; ?></div>
                         </div>
-
                         <div class="info-item">
                             <div class="info-label">Status</div>
-                            <div class="info-value">
-                                <?php echo $statusText; ?>
-                            </div>
+                            <div class="info-value"><?php echo $statusText; ?></div>
                         </div>
-
                         <div class="info-item">
                             <div class="info-label">Attachment</div>
                             <div class="info-value">
                                 <?php echo !empty($task['task_image']) ? 'Available' : 'None'; ?>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
+            <!-- END RIGHT COLUMN -->
 
         </div>
+        <!-- END GRID -->
 
     </div>
-
-    <!-- LIGHTBOX -->
-    <div class="lightbox" id="lightbox" onclick="closeImage()">
-        <img id="preview-image">
-    </div>
-
-    <script>
-
-        function openImage(src) {
-
-            document.getElementById("lightbox").style.display = "flex";
-
-            document.getElementById("preview-image").src = src;
-        }
-
-        function closeImage() {
-
-            document.getElementById("lightbox").style.display = "none";
-        }
-
-    </script>
+    <!-- END WRAPPER -->
 
 </body>
 
