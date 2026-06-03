@@ -460,10 +460,14 @@ $hasSubmission = $hasText || $hasFile;
                             <?php } ?>
 
                             <?php if (!empty($task['task_submit'])) { ?>
-                                <a href="../../uploads/submissions/<?php echo $task['task_submit']; ?>" target="_blank"
-                                    class="btn btn-success">
-                                    View Attachment
-                                </a>
+                                 <a href="../../uploads/submissions/<?php echo $task['task_submit']; ?>" target="_blank"
+                                            class="btn btn-success">
+
+                                            <i class="las la-eye"></i>
+
+                                            View Attachment
+
+                                        </a>
                             <?php } ?>
 
                             <div class="mt-2">
