@@ -8,223 +8,332 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon" />
-    <title>Task Management | List Users</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>List Users</title>
 
-    <?php include_once "../../includes/components/links.php"; ?>
+<?php include_once "../../includes/components/links.php"; ?>
+
+<style>
+
+/* =========================
+   DESIGN SYSTEM (MATCH ADD USER)
+========================= */
+:root{
+    --primary:#5b4dff;
+    --secondary:#3f8cff;
+    --border:#e5e7eb;
+    --muted:#64748b;
+}
+
+body{
+    background:#f5f7ff;
+}
+
+/* =========================
+   HEADER (SOFT PRO GRADIENT)
+========================= */
+.page-header{
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    border-radius:18px;
+    padding:20px 25px;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    box-shadow:0 10px 25px rgba(91,77,255,.20);
+    margin-top:20px;
+}
+
+.header-icon{
+    width:60px;
+    height:60px;
+    border-radius:16px;
+    background:rgba(255,255,255,.15);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+}
+
+/* 🔥 FIX: softer typography (not harsh black look) */
+.header-title{
+    font-size:1.5rem;
+    font-weight:700;
+    margin:0;
+    color:#fff;
+}
+
+.header-subtitle{
+    margin:0;
+    font-size:.85rem;
+    color:rgba(255,255,255,.85);
+}
+
+/* =========================
+   MAIN CARD
+========================= */
+.glass-card{
+    background:#fff;
+    border-radius:18px;
+    padding:18px;
+    margin-top:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,.06);
+}
+
+/* =========================
+   TABLE STYLE (MODERN SAAS)
+========================= */
+.table{
+    border-collapse:separate;
+    border-spacing:0 12px;
+}
+
+.table thead th{
+    font-size:12px;
+    color:#94a3b8; /* lighter header text */
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    border:none !important;
+    padding:12px;
+}
+
+.table tbody tr{
+    background:#fff;
+    box-shadow:0 6px 18px rgba(0,0,0,.05);
+    border-radius:14px;
+    transition:.2s ease;
+}
+
+.table tbody tr:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 25px rgba(0,0,0,.08);
+}
+
+.table td{
+    border:none !important;
+    vertical-align:middle;
+    padding:14px;
+}
+
+/* =========================
+   USER CELL (CLEAN + MODERN)
+========================= */
+.user-box{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.user-box img{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    border:2px solid #eef2ff;
+    object-fit:cover;
+}
+
+.user-name{
+    font-weight:700;
+    color:#1f2937; /* soft black */
+}
+
+.user-role-text{
+    font-size:12px;
+    color:#64748b;
+}
+
+/* =========================
+   ROLE BADGE
+========================= */
+.role-badge{
+    padding:5px 12px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.admin{
+    background:rgba(91,77,255,.12);
+    color:var(--primary);
+}
+
+.member{
+    background:rgba(63,140,255,.12);
+    color:var(--secondary);
+}
+
+/* =========================
+   ACTION BUTTONS (PRO UI)
+========================= */
+.action{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.action-btn{
+    width:36px;
+    height:36px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:10px;
+    transition:.2s ease;
+    text-decoration:none;
+}
+
+.action-btn:hover{
+    transform:translateY(-2px);
+}
+
+.view{ background:#ecfdf5; color:#10b981; }
+.edit{ background:#eff6ff; color:#3b82f6; }
+.delete{ background:#fef2f2; color:#ef4444; border:none; }
+
+</style>
 </head>
 
 <body>
 
-    <?php include_once "../../includes/components/preloader.php"; ?>
-    <?php include_once "../../includes/elements/sidebar.php"; ?>
+<?php include_once "../../includes/components/preloader.php"; ?>
+<?php include_once "../../includes/elements/sidebar.php"; ?>
 
-    <main class="main-wrapper">
+<main class="main-wrapper">
 
-        <?php include_once "../../includes/elements/navbar.php"; ?>
+<?php include_once "../../includes/elements/navbar.php"; ?>
 
-        <?php if (isset($_SESSION['success'])) { ?>
-            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                <strong>Success!</strong> <?= $_SESSION['success']; ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            <?php unset($_SESSION['success']); ?>
-        <?php } ?>
+<div class="container-fluid">
 
-        <?php if (isset($_SESSION['error'])) { ?>
-            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                <strong>Error!</strong> <?= $_SESSION['error']; ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            <?php unset($_SESSION['error']); ?>
-        <?php } ?>
+<!-- HEADER -->
+<div class="page-header">
+    <div class="header-icon">
+        <i class="lni lni-users"></i>
+    </div>
 
-        <!-- PAGE -->
-        <section class="section">
-            <div class="container-fluid">
+    <div>
+        <h2 class="header-title">List Users</h2>
+        <p class="header-subtitle">Manage system users and permissions</p>
+    </div>
+</div>
 
-                <!-- TITLE -->
-                <div class="title-wrapper pt-30">
-                    <div class="row align-items-center">
+<!-- TABLE CARD -->
+<div class="glass-card">
 
-                        <div class="col-md-6">
-                            <div class="title">
-                                <h2>List Users</h2>
-                            </div>
-                        </div>
+<div class="table-responsive">
+<table class="table">
 
-                        <div class="col-md-6">
-                            <div class="breadcrumb-wrapper">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item">
-                                            <a href="../dashboard/dashboard.php">Dashboard</a>
-                                        </li>
-                                        <li class="breadcrumb-item active">List Users</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
+<thead>
+<tr>
+    <th>User</th>
+    <th>Username</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th>Action</th>
+</tr>
+</thead>
 
-                    </div>
-                </div>
+<tbody>
 
-                <!-- TABLE -->
-                <div class="row">
-                    <div class="card-style mb-30">
-                        <div class="table-wrapper table-responsive">
-
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <h6>User</h6>
-                                        </th>
-                                        <th>
-                                            <h6>Username</h6>
-                                        </th>
-                                        <th>
-                                            <h6>Email</h6>
-                                        </th>
-                                        <th>
-                                            <h6>Role</h6>
-                                        </th>
-                                        <th>
-                                            <h6>Action</h6>
-                                        </th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-
-                                    <?php
-                                    $users = mysqli_query($conn, "
-    SELECT * FROM users_tbl 
-    LEFT JOIN roles_tbl 
-    ON roles_tbl.role_id = users_tbl.role
+<?php
+$users = mysqli_query($conn,"
+SELECT * FROM users_tbl 
+LEFT JOIN roles_tbl 
+ON roles_tbl.role_id = users_tbl.role
 ");
 
-                                    while ($user = mysqli_fetch_array($users)) {
-                                        ?>
+while ($user = mysqli_fetch_array($users)) {
+?>
 
-                                        <tr>
+<tr>
 
-                                            <!-- USER -->
-                                            <td class="min-width">
-                                                <div class="lead">
-                                                    <div class="lead-image">
-                                                        <img src="<?= get_user_profile_image($conn, $user['user_id']); ?>"
-                                                            alt="<?= $user['full_name']; ?>" />
-                                                    </div>
-                                                    <div class="lead-text">
-                                                        <p><?= $user['full_name']; ?></p>
-                                                    </div>
-                                                </div>
-                                            </td>
+<td>
+<div class="user-box">
+    <img src="<?= get_user_profile_image($conn,$user['user_id']); ?>">
+    <div>
+        <div class="user-name"><?= $user['full_name']; ?></div>
+        <div class="user-role-text">@<?= $user['username']; ?></div>
+    </div>
+</div>
+</td>
 
-                                            <!-- USERNAME -->
-                                            <td class="min-width">
-                                                <p><?= $user['username']; ?></p>
-                                            </td>
+<td><?= $user['username']; ?></td>
 
-                                            <!-- EMAIL -->
-                                            <td class="min-width">
-                                                <p><?= $user['email']; ?></p>
-                                            </td>
+<td><?= $user['email']; ?></td>
 
-                                            <!-- ROLE -->
-                                            <td class="min-width">
-                                                <p><?= $user['role']; ?></p>
-                                            </td>
+<td>
+<span class="role-badge <?= strtolower($user['role'])=='admin'?'admin':'member'; ?>">
+    <?= $user['role']; ?>
+</span>
+</td>
 
-                                            <!-- ACTION -->
-                                            <td>
-                                                <div class="action">
+<td>
 
-                                                    <a class="text-success lni lni-eye m-1"
-                                                        href="../profile/profile.php?user_id=<?php echo $user['user_id']; ?>">
-                                                    </a>
+<div class="action">
 
+<a class="action-btn view"
+   href="../profile/profile.php?user_id=<?= $user['user_id']; ?>">
+   <i class="lni lni-eye"></i>
+</a>
 
-                                                    <!-- EDIT -->
-                                                    <a href="edit.user.php?user_id=<?= $user['user_id']; ?>"
-                                                        class="text-primary">
-                                                        <i class="lni lni-pencil"></i>
-                                                    </a>
+<a class="action-btn edit"
+   href="edit.user.php?user_id=<?= $user['user_id']; ?>">
+   <i class="lni lni-pencil"></i>
+</a>
 
-                                                    <!-- DELETE BUTTON -->
-                                                    <button type="button" class="text-danger border-0 bg-transparent"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#deleteUserModal<?= $user['user_id']; ?>">
-                                                        <i class="lni lni-trash-can"></i>
-                                                    </button>
+<button class="action-btn delete"
+        data-bs-toggle="modal"
+        data-bs-target="#deleteUserModal<?= $user['user_id']; ?>">
+   <i class="lni lni-trash-can"></i>
+</button>
 
-                                                </div>
-                                            </td>
+</div>
 
-                                        </tr>
+</td>
 
-                                        <!-- DELETE MODAL -->
-                                        <div class="modal fade" id="deleteUserModal<?= $user['user_id']; ?>" tabindex="-1"
-                                            aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
+</tr>
 
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title text-danger">Delete User</h5>
-                                                        <button type="button" class="btn-close"
-                                                            data-bs-dismiss="modal"></button>
-                                                    </div>
+<!-- DELETE MODAL (UNCHANGED FUNCTION) -->
+<div class="modal fade" id="deleteUserModal<?= $user['user_id']; ?>">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content">
 
-                                                    <div class="modal-body">
-                                                        Are you sure you want to delete this user?
+<div class="modal-header">
+<h5 class="modal-title text-danger">Delete User</h5>
+<button class="btn-close" data-bs-dismiss="modal"></button>
+</div>
 
-                                                        <br><br>
+<div class="modal-body">
+Are you sure you want to delete <b><?= $user['full_name']; ?></b>?
+</div>
 
-                                                        <strong><?= htmlspecialchars($user['full_name']); ?></strong>
+<div class="modal-footer">
+<button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+<a class="btn btn-danger"
+   href="ctrlData/ctrl.delete.user.php?user_id=<?= $user['user_id']; ?>">
+Delete
+</a>
+</div>
 
-                                                        <br><br>
+</div>
+</div>
+</div>
 
-                                                        This action cannot be undone.
-                                                    </div>
+<?php } ?>
 
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">
-                                                            Cancel
-                                                        </button>
+</tbody>
+</table>
+</div>
 
-                                                        <a href="ctrlData/ctrl.delete.user.php?user_id=<?= $user['user_id']; ?>"
-                                                            class="btn btn-danger">
-                                                            Yes, Delete
-                                                        </a>
-                                                    </div>
+</div>
 
-                                                </div>
-                                            </div>
-                                        </div>
+</div>
 
-                                    <?php } ?>
+<?php include_once "../../includes/elements/footer.php"; ?>
 
-                                </tbody>
-                            </table>
+</main>
 
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <?php include_once "../../includes/elements/footer.php"; ?>
-
-    </main>
-
-    <?php include_once "../../includes/components/scripts.php"; ?>
+<?php include_once "../../includes/components/scripts.php"; ?>
 
 </body>
-
 </html>

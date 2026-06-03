@@ -7,19 +7,20 @@ if (!isset($_POST['submit'])) {
     exit();
 }
 
+/* INPUTS */
 $full_name = mysqli_real_escape_string($conn, $_POST["fullname"]);
-$username = mysqli_real_escape_string($conn, $_POST["username"]);
-$email = mysqli_real_escape_string($conn, $_POST["email"]);
+$username  = mysqli_real_escape_string($conn, $_POST["username"]);
+$email     = mysqli_real_escape_string($conn, $_POST["email"]);
+$role      = mysqli_real_escape_string($conn, $_POST["role"]);
 
 $password = $_POST["password"];
 $hashed_pass = password_hash($password, PASSWORD_DEFAULT);
 
-$role = mysqli_real_escape_string($conn, $_POST["role"]);
-
-/* Default bio for newly created users */
+/* DEFAULT VALUES */
 $bio = "";
 
-$insert_user = mysqli_query($conn, "
+/* INSERT QUERY */
+$query = "
     INSERT INTO users_tbl (
         full_name,
         username,
@@ -27,7 +28,6 @@ $insert_user = mysqli_query($conn, "
         password,
         bio,
         role
-    WHERE user_id = '$user_id'
     )
     VALUES (
         '$full_name',
@@ -36,14 +36,16 @@ $insert_user = mysqli_query($conn, "
         '$hashed_pass',
         '$bio',
         '$role'
-    
     )
-");
+";
 
+$insert_user = mysqli_query($conn, $query);
+
+/* RESULT */
 if ($insert_user) {
     $_SESSION['success'] = "User added successfully.";
 } else {
-    $_SESSION['error'] = "Failed to add user.";
+    $_SESSION['error'] = "Failed to add user: " . mysqli_error($conn);
 }
 
 header("location: ../list.user.php");
