@@ -9,206 +9,367 @@ session_start();
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon" />
+
     <title>Task Management | Register</title>
 
     <?php include_once "../../includes/components/links.php"; ?>
 
-               </head>
-            <style>
-            .signin-wrapper{
-             width:100%;
-             max-width:450px;
-           }
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-           .input-style-1{
-              margin-bottom:8px !important;
-           }
-
-           .input-style-1 label{
-           margin-bottom:3px;
-           font-size:14px;
-          }
-
-          .input-style-1 input{
-           height:45px !important;
-          }
-
-         .cover-image img{
-           max-width:70%;
-          display:block;
-        margin:auto;
-         }
-
-          .form-wrapper h6{
-              margin-bottom:5px !important;
-         }
-
-            .form-wrapper .text-sm{
-              margin-bottom:12px !important;
-           }
-
-               #passwordfeedback{
-               margin-top:3px;
-               margin-bottom:0;
-               font-size:12px;
-             }
-            </style>
-          </head>
-<body>
-    <!-- ========== signin-section start ========== -->
-     <div class="container-fluid g-0 min-vh-100">
-    <div class="row g-0 min-vh-100">
-            <div class="col-lg-6">
-                <div class="auth-cover-wrapper bg-primary-100">
-                    <div class="auth-cover">
-                        <div class="title text-center">
-                            <h1 class="text-primary mb-10">Welcome!</h1>
-                            <p class="text-medium">
-                                Create an account to continue
-                            </p>
-                        </div>
-                        <div class="cover-image">
-                            <img src="../../assets/images/auth/signin-image.svg" alt="" />
-                        </div>
-                        <div class="shape-image">
-                            <img src="../../assets/images/auth/shape.svg" alt="" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end col -->
-            <div class="col-lg-6 align-items-center justify-content-center d-flex">
-                <div class="signin-wrapper col-md-7">
-                    <div class="form-wrapper">
-                        <h6 class="mb-15">Register Page</h6>
-                        <p class="text-sm mb-25">
-                            Please fill out the fields to continue creating your account.
-                        </p>
-
-                        <?php if (isset($_SESSION['error_username'])) { ?>
-                            <div class="alert alert-danger mb-3">
-                                Username already exists!
-                            </div>
-                            <?php unset($_SESSION['error_username']); ?>
-                        <?php } ?>
-
-                        <form action="ctrlData/ctrl.register.php" method="POST">
-
-                            <div class="form-group">
-                                <div class="col-12">
-                                    <div class="input-style-1">
-                                        <label>Full Name</label>
-                                        <input type="text" name="fullname" class="form-control"
-                                            placeholder="Fullname" required/>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end col -->
-
-                            <div class="form-group">
-                                <div class="col-12">
-                                    <div class="input-style-1">
-                                        <label>Username</label>
-                                        <input type="text" name="username" class="form-control"
-                                            placeholder="Username" required/>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end col -->
-
-                            <div class="form-group">
-                                <div class="col-12">
-                                    <div class="input-style-1">
-                                        <label>Email</label>
-                                        <input type="email" name="email" class="form-control"
-                                            placeholder="Email@mail.com" required/>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end col -->
-
-                            <div class="form-group">
-                                <div class="col-12">
-                                    <div class="input-style-1">
-                                        <label>Password</label>
-                                        <input type="password" name="password" class="form-control"
-                                            placeholder="*********" id="password" required/>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end col -->
-
-                            <div class="form-group">
-                                <div class="col-12">
-                                    <div class="input-style-1">
-                                        <label>Confirm Password</label>
-                                        <input type="password" class="form-control" id="confirmpassword" required/>
-                                        <p id="passwordfeedback"></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end col -->
-
-                            <div class="col-12">
-                           <div class="button-group d-flex justify-content-center flex-wrap">
-                              <button type="submit" name="submit" id="submit"
-                               class="main-btn primary-btn btn-hover w-100 text-center">
-                               Register
-                         </button>
-                     </div>
-
-                     <div class="text-center mt-3">
-                         <p class="mb-0">
-                           Already have an account?
-                        <a href="../login/login.php" class="text-primary">
-                         Login Here
-                     </a>
-                     </p>
-                  </div>
-               </div>
-                            <!-- end row -->
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-            <!-- end col -->
-        </div>
-        <!-- end row -->
-    </div>
-    <!-- ========== signin-section end ========== -->
-
-    <script>
-        const passInput = document.getElementById("password");
-        const confirmInput = document.getElementById("confirmpassword");
-        const submitBtn = document.getElementById("submit");
-        const passFeedback = document.getElementById("passwordfeedback");
-
-        function validatePassword() {
-            const passValue = passInput.value;
-            const confirmValue = confirmInput.value;
-
-            if (confirmValue === "") {
-                passFeedback.innerText = "";
-                passFeedback.className = "form-text mt-2";
-                confirmInput.className = "form-control"
-                submitBtn.disabled = true;
-                return;
-            }
-
-            const matchState = passValue !== confirmValue;
-            passFeedback.innerText = matchState ? "Passwords Mismatch" : "";
-            passFeedback.className = matchState ? "form-text mt-2 text-danger" : "form-text mt-2";
-            confirmInput.className = matchState ? "form-control border border-danger" : "form-control"
-            submitBtn.disabled = matchState;
+    <style>
+        html,
+        body {
+            height: 100%;
         }
 
-        passInput.addEventListener('input', validatePassword);
-        confirmInput.addEventListener('input', validatePassword);
-    </script>
+        .auth-cover-wrapper,
+        .auth-cover {
+            height: 100%;
+        }
 
-    <?php include_once "../../includes/components/scripts.php"; ?>
+        .login-side {
+            background:
+                radial-gradient(circle at top left,
+                    rgba(79, 70, 229, .12),
+                    transparent 35%),
+                radial-gradient(circle at bottom right,
+                    rgba(59, 130, 246, .15),
+                    transparent 35%),
+                #f4f7ff;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-side::before {
+            content: "";
+            position: absolute;
+
+            width: 350px;
+            height: 350px;
+
+            border-radius: 50%;
+
+            background: rgba(99, 102, 241, .12);
+
+            top: -120px;
+            right: -120px;
+
+            filter: blur(50px);
+        }
+
+        .login-side::after {
+            content: "";
+            position: absolute;
+
+            width: 280px;
+            height: 280px;
+
+            border-radius: 50%;
+
+            background: rgba(59, 130, 246, .12);
+
+            bottom: -80px;
+            left: -80px;
+
+            filter: blur(50px);
+        }
+
+        .glass-card {
+            position: relative;
+            z-index: 5;
+
+            width: 100%;
+            max-width: 500px;
+
+            padding: 40px;
+
+            border-radius: 28px;
+
+            background: rgba(255, 255, 255, .65);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border: 1px solid rgba(255, 255, 255, .5);
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, .08),
+                0 5px 15px rgba(99, 102, 241, .08);
+        }
+
+        .logo-circle {
+            width: 90px;
+            height: 90px;
+
+            margin: auto;
+            margin-bottom: 25px;
+
+            border-radius: 50%;
+
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #3b82f6);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            box-shadow:
+                0 10px 25px rgba(79, 70, 229, .3);
+        }
+
+        .logo-circle i {
+            color: white;
+            font-size: 34px;
+        }
+
+        .form-title {
+            text-align: center;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .form-desc {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .input-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .glass-input {
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .glass-input i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+        }
+
+        .glass-input input {
+            width: 100%;
+            height: 55px;
+
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+
+            background: rgba(255, 255, 255, .80);
+
+            padding-left: 48px;
+
+            transition: .3s;
+        }
+
+        .glass-input input:focus {
+            outline: none;
+
+            border-color: #4f46e5;
+
+            box-shadow:
+                0 0 0 4px rgba(79, 70, 229, .12);
+        }
+
+        .register-btn {
+            width: 100%;
+            height: 55px;
+
+            border: none;
+            border-radius: 14px;
+
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #3b82f6);
+
+            color: white;
+            font-weight: 600;
+
+            transition: .3s;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 20px rgba(79, 70, 229, .25);
+        }
+
+        .extra-links {
+            margin-top: 18px;
+            text-align: center;
+            color: #64748b;
+        }
+
+        .extra-links a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        #passwordfeedback {
+            font-size: 13px;
+            margin-top: -10px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container-fluid g-0 min-vh-100">
+<div class="row g-0 min-vh-100">
+
+    <div class="col-lg-6">
+        <div class="auth-cover-wrapper bg-primary-100">
+            <div class="auth-cover">
+
+                <div class="title text-center">
+                    <h1 class="text-primary mb-10">
+                        Welcome!
+                    </h1>
+
+                    <p class="text-medium">
+                        Create an account to continue
+                    </p>
+                </div>
+
+                <div class="cover-image">
+                    <img src="../../assets/images/auth/signin-image.svg" alt="">
+                </div>
+
+                <div class="shape-image">
+                    <img src="../../assets/images/auth/shape.svg" alt="">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 d-flex justify-content-center align-items-center login-side">
+
+        <div class="glass-card">
+
+            <div class="logo-circle">
+                <i class="fa-solid fa-user-plus"></i>
+            </div>
+
+            <h4 class="form-title">
+                Register Page
+            </h4>
+
+            <p class="form-desc">
+                Please fill out the fields to continue creating your account.
+            </p>
+
+            <?php if (isset($_SESSION['error_username'])) { ?>
+                <div class="alert alert-danger mb-3">
+                    Username already exists!
+                </div>
+                <?php unset($_SESSION['error_username']); ?>
+            <?php } ?>
+
+            <form action="ctrlData/ctrl.register.php" method="POST">
+                <!-- FULL NAME -->
+                <label class="input-label">Full Name</label>
+                <div class="glass-input">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" name="fullname" placeholder="Full Name" required>
+                </div>
+
+                <!-- USERNAME -->
+                <label class="input-label">Username</label>
+                <div class="glass-input">
+                    <i class="fa-solid fa-at"></i>
+                    <input type="text" name="username" placeholder="Username" required>
+                </div>
+
+                <!-- EMAIL -->
+                <label class="input-label">Email</label>
+                <div class="glass-input">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+
+                <!-- PASSWORD -->
+                <label class="input-label">Password</label>
+                <div class="glass-input">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                </div>
+
+                <!-- CONFIRM PASSWORD -->
+                <label class="input-label">Confirm Password</label>
+                <div class="glass-input">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="confirmpassword" placeholder="Confirm Password" required>
+                </div>
+
+                <p id="passwordfeedback"></p>
+
+                <button type="submit" name="submit" id="submit" class="register-btn">
+                    Register
+                </button>
+
+                <div class="extra-links">
+                    Already have an account?
+                    <a href="../login/login.php">
+                        Login Here
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+<script>
+    const passInput = document.getElementById("password");
+    const confirmInput = document.getElementById("confirmpassword");
+    const submitBtn = document.getElementById("submit");
+    const passFeedback = document.getElementById("passwordfeedback");
+
+    function validatePassword() {
+        const passValue = passInput.value;
+        const confirmValue = confirmInput.value;
+
+        if (confirmValue === "") {
+            passFeedback.innerText = "";
+            submitBtn.disabled = true;
+            return;
+        }
+
+        const mismatch = passValue !== confirmValue;
+
+        passFeedback.innerText = mismatch ? "Passwords do not match" : "";
+        passFeedback.style.color = mismatch ? "red" : "green";
+
+        submitBtn.disabled = mismatch;
+    }
+
+    passInput.addEventListener("input", validatePassword);
+    confirmInput.addEventListener("input", validatePassword);
+</script>
+
+<?php include_once "../../includes/components/scripts.php"; ?>
+
 </body>
-
 </html>
