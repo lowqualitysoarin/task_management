@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <?php #include_once "../../includes/components/preloader.php"; ?>
+    <?php include_once "../../includes/components/preloader.php"; ?>
 
     <?php include_once "../../includes/elements/sidebar.php"; ?>
     <?php

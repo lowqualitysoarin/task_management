@@ -57,7 +57,7 @@
                         <?php } ?>
 
                         <!-- TITLE -->
-                        <div class="title-wrapper pt-30">
+                        <div class="title-wrapper pt-30 mb-3">
                             <div class="row align-items-center">
                                 <div class="col-md-6">
                                     <h2>Dashboard</h2>
@@ -107,14 +107,14 @@
                                             <th>Description</th>
                                             <th>Status</th>
                                             <th>Assigned Member</th>
-                                            <th>Action</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
 
                                         <?php
-                                        $query = "
+                                        $query = $query = "
                                         SELECT tasks_tbl.*, task_status_tbl.status
                                         FROM tasks_tbl
                                         LEFT JOIN task_status_tbl ON task_status_tbl.status_id = tasks_tbl.task_status
@@ -139,6 +139,7 @@
 
                                         $tasks = mysqli_query($conn, $query);
                                         while ($task = mysqli_fetch_array($tasks)) {
+
                                             $status_color = match ((int) $task['task_status']) {
                                                 1 => "info-btn",
                                                 2 => "active-btn",
@@ -166,7 +167,6 @@
                                                         <div class="d-flex align-items-center">
                                                             <?php
                                                             $task_id = $task['task_id'];
-
                                                             $select_members = mysqli_query($conn, "SELECT * FROM task_members_tbl LEFT JOIN users_tbl ON users_tbl.user_id = task_members_tbl.user_id WHERE task_id = '$task_id'");
                                                             while ($row = mysqli_fetch_array($select_members)) {
                                                                 ?>
@@ -189,7 +189,7 @@
                                                             <a class="text-success lni lni-eye m-1"
                                                                 href="../tasks/task.view.php?id=<?php echo $task['task_id']; ?>">
                                                             </a>
-                                                            <a class="text-primary lni lni-popup" href="#" m-1
+                                                            <a class="text-primary lni lni-popup m-1" href="#"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#status-modal-<?php echo $task['task_id']; ?>">
                                                             </a>
@@ -235,26 +235,22 @@
                                                                                 value="<?php echo $st['status_id']; ?>" required>
                                                                             <label><?php echo $st['status']; ?></label>
                                                                             <?php if ($task['task_status'] == $st['status_id'])
-                                                                                echo "checked"; ?>
+                                                                                echo "checked"; ?>>
                                                                         </div>
                                                                     <?php } ?>
 
                                                                 </div>
+
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-bs-dismiss="modal">Close</button>
                                                                     <button type="submit" name="submit"
                                                                         class="btn btn-primary">Save</button>
                                                                 </div>
-
                                                             </div>
-
                                                         </div>
-
                                                     </div>
-
                                                 </form>
-
                                             <?php }
                                         } ?>
 

@@ -8,166 +8,311 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon" />
-    <title>Task Management | Add Task</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Task Management | Add Task</title>
 
-    <?php include_once "../../includes/components/links.php"; ?>
+<?php include_once "../../includes/components/links.php"; ?>
+
+<style>
+
+:root{
+    --primary:#5b4dff;
+    --secondary:#3f8cff;
+    --muted:#64748b;
+    --border:#e5e7eb;
+}
+
+body{
+    background:#f5f7ff;
+}
+
+/* ================= HEADER ================= */
+.page-header{
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    border-radius:18px;
+    padding:20px 25px;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    box-shadow:0 10px 25px rgba(91,77,255,.20);
+    margin-top:20px;
+}
+
+.header-icon{
+    width:60px;
+    height:60px;
+    border-radius:16px;
+    background:rgba(255,255,255,.15);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+}
+
+.header-title{
+    font-size:1.5rem;
+    font-weight:700;
+    color:#fff;
+    margin:0;
+}
+
+.header-subtitle{
+    margin:0;
+    font-size:.85rem;
+    opacity:.9;
+}
+
+/* ================= CARD ================= */
+.glass-card{
+    background:#fff;
+    border-radius:18px;
+    padding:25px;
+    margin-top:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,.06);
+}
+
+/* SECTION HEADER */
+.section-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.section-icon{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#eef2ff;
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.section-head h5{
+    margin:0;
+    font-weight:700;
+    font-size:1rem;
+    color:#111827;
+}
+
+.section-head p{
+    margin:0;
+    font-size:.8rem;
+    color:var(--muted);
+}
+
+/* INPUTS */
+.form-label{
+    font-size:.85rem;
+    font-weight:600;
+    color:#374151;
+    margin-bottom:5px;
+}
+
+.input-group-custom{
+    position:relative;
+}
+
+.input-group-custom i{
+    position:absolute;
+    left:14px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#94a3b8;
+}
+
+.input-custom,
+textarea{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:12px 12px 12px 42px;
+    font-size:.9rem;
+    transition:.3s;
+    background:#fff;
+}
+
+textarea{
+    min-height:120px;
+    padding-left:42px;
+}
+
+.input-custom:focus,
+textarea:focus{
+    outline:none;
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(91,77,255,.12);
+}
+
+/* FILE INPUT */
+input[type="file"]{
+    width:100%;
+    padding:10px;
+    border:1px dashed var(--border);
+    border-radius:12px;
+    background:#fafaff;
+}
+
+/* DROPDOWN ASSIGNEES */
+.dropdown-menu{
+    border-radius:12px;
+    padding:10px;
+}
+
+/* BUTTON */
+.btn-add{
+    width:100%;
+    height:50px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    color:#fff;
+    font-weight:700;
+    margin-top:10px;
+    transition:.3s;
+}
+
+.btn-add:hover{
+    transform:translateY(-2px);
+}
+
+.small-note{
+    font-size:12px;
+    color:var(--muted);
+}
+
+</style>
+
 </head>
 
 <body>
-    <?php include_once "../../includes/components/preloader.php"; ?>
 
-    <?php include_once "../../includes/elements/sidebar.php"; ?>
+<?php include_once "../../includes/components/preloader.php"; ?>
+<?php include_once "../../includes/elements/sidebar.php"; ?>
 
-    <!-- ======== main-wrapper start =========== -->
-    <main class="main-wrapper">
-        <?php include_once "../../includes/elements/navbar.php"; ?>
+<main class="main-wrapper">
 
-        <!-- ========== section start ========== -->
-        <section class="section">
-            <div class="container-fluid">
-                <!-- ========== title-wrapper start ========== -->
-                <div class="title-wrapper pt-30">
-                    <div class="row align-items-center">
-                        <div class="col-md-6">
-                            <div class="title">
-                                <h2>Add Task</h2>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                        <div class="col-md-6">
-                            <div class="breadcrumb-wrapper">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item">
-                                            <a href="../dashboard/dashboard.php">Dashboard</a>
-                                        </li>
-                                        <li class="breadcrumb-item active" aria-current="page">
-                                            Add Task
-                                        </li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                    </div>
-                    <!-- end row -->
-                </div>
-                <!-- ========== title-wrapper end ========== -->
+<?php include_once "../../includes/elements/navbar.php"; ?>
 
-                <form action="ctrlData/ctrl.add.task.php" class="form-elements wrapper" method="POST"
-                    enctype="multipart/form-data">
-                    <div class="form-elements-wrapper">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <!-- input style start -->
-                                <div class="card-style mb-30">
-                                    <h6 class="mb-25">Task</h6>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="input-style-1">
-                                                <label>Task Name</label>
-                                                <input type="text" placeholder="Task Name" name="taskname" required />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="input-style-3">
-                                                <label>Task Description</label>
-                                                <div class="input-style-3">
-                                                    <textarea type="text" placeholder="Task Description"
-                                                        name="taskdescription" rows="5"></textarea>
-                                                    <span class="icon"><i class="lni lni-text-format"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+<section class="section">
+<div class="container-fluid">
 
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="input-style-1">
-                                                <label>Attachment</label>
+<!-- HEADER -->
+<div class="page-header">
+    <div class="header-icon">
+        <i class="lni lni-clipboard"></i>
+    </div>
+    <div>
+        <h2 class="header-title">Add New Task</h2>
+        <p class="header-subtitle">Create and assign tasks to team members ✨</p>
+    </div>
+</div>
 
-                                                <input type="file" name="attachment"
-                                                    accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx">
+<!-- FORM CARD -->
+<div class="glass-card">
 
-                                                <small class="text-muted">
-                                                    Allowed: JPG, PNG, PDF, DOC, DOCX, XLS, XLSX
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div>
+<form action="ctrlData/ctrl.add.task.php" method="POST" enctype="multipart/form-data">
 
-                                    <h6 class="mb-25">Assign Member</h6>
-                                    <div class="row">
-                                        <div class="col mb-1">
-                                            <div class="select-style-1">
-                                                <label>Select Member</label>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary col-md-2" style="height: 50px;"
-                                                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Select Assignees
-                                                    </button>
-                                                    <ul class="dropdown-menu overflow-auto" style="max-height: 200px;">
-                                                        <?php
-                                                        $select_users = mysqli_query($conn, "SELECT * FROM users_tbl LEFT JOIN roles_tbl ON roles_tbl.role_id = users_tbl.role");
-                                                        while ($user = mysqli_fetch_array($select_users)) {
-                                                            if ($user['role'] != "Admin") {
-                                                                ?>
-                                                                <li>
-                                                                    <?php
-                                                                    $checkbox_id = "assignee" . (string) $user['user_id'];
-                                                                    ?>
-                                                                    <div class="form-check form-check-inline m-2">
-                                                                        <input class="form-check-input" type="checkbox"
-                                                                            id="<?php echo $checkbox_id; ?>"
-                                                                            value="<?php echo $user['user_id']; ?>"
-                                                                            name="assignees[]">
-                                                                        <label for="<?php echo $checkbox_id; ?>"
-                                                                            class="form-check-label"><?php echo $user['full_name']; ?></label>
-                                                                    </div>
-                                                                </li>
-                                                                <?php
-                                                            }
-                                                        }
-                                                        ?>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+    <!-- TASK INFO -->
+    <div class="section-head">
+        <div class="section-icon"><i class="lni lni-clipboard"></i></div>
+        <div>
+            <h5>Task Information</h5>
+            <p>Enter task details</p>
+        </div>
+    </div>
 
-                                    <div class="row">
-                                        <div class="col">
-                                            <button type="submit" style="height: 50px;" class="btn btn-primary col-md-1"
-                                                name="submit">Add
-                                                Task</button>
-                                        </div>
-                                    </div>
-                                    <!-- end input -->
-                                </div>
-                                <!-- end card -->
-                                <!-- ======= input style end ======= -->
-                            </div>
-                        </div>
-                        <!-- end row -->
-                    </div>
-                </form>
-                <!-- end input -->
+    <hr>
+
+    <div class="row">
+
+        <div class="col-md-12 mb-3">
+            <label class="form-label">Task Name</label>
+            <div class="input-group-custom">
+                <i class="lni lni-pencil"></i>
+                <input type="text" name="taskname" class="input-custom" required>
             </div>
-            <!-- End Row -->
-        </section>
-        <!-- ========== section end ========== -->
+        </div>
 
-        <?php include_once "../../includes/elements/footer.php"; ?>
-    </main>
-    <!-- ======== main-wrapper end =========== -->
+        <div class="col-md-12 mb-3">
+            <label class="form-label">Task Description</label>
+            <div class="input-group-custom">
+                <i class="lni lni-text-format"></i>
+                <textarea name="taskdescription" placeholder="Write task details..."></textarea>
+            </div>
+        </div>
 
-    <?php include_once "../../includes/components/scripts.php"; ?>
+        <div class="col-md-12 mb-3">
+            <label class="form-label">Attachment</label>
+            <input type="file" name="attachment"
+                accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx">
+            <div class="small-note">Allowed: JPG, PNG, PDF, DOC, XLS</div>
+        </div>
+
+    </div>
+
+    <!-- ASSIGN -->
+    <div class="section-head mt-3">
+        <div class="section-icon"><i class="lni lni-users"></i></div>
+        <div>
+            <h5>Assign Members</h5>
+            <p>Select team members for this task</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="dropdown mb-3">
+        <button class="btn btn-secondary w-100" type="button" data-bs-toggle="dropdown">
+            Select Assignees
+        </button>
+
+        <ul class="dropdown-menu w-100" style="max-height:220px; overflow:auto;">
+            <?php
+            $select_users = mysqli_query($conn,
+                "SELECT * FROM users_tbl 
+                 LEFT JOIN roles_tbl ON roles_tbl.role_id = users_tbl.role"
+            );
+
+            while ($user = mysqli_fetch_array($select_users)) {
+                if ($user['role'] != "Admin") {
+                    $checkbox_id = "assignee".$user['user_id'];
+            ?>
+                <li>
+                    <div class="form-check m-2">
+                        <input class="form-check-input" type="checkbox"
+                               id="<?= $checkbox_id; ?>"
+                               value="<?= $user['user_id']; ?>"
+                               name="assignees[]">
+                        <label class="form-check-label" for="<?= $checkbox_id; ?>">
+                            <?= $user['full_name']; ?>
+                        </label>
+                    </div>
+                </li>
+            <?php }} ?>
+        </ul>
+    </div>
+
+    <button type="submit" name="submit" class="btn-add">
+        <i class="lni lni-plus"></i> Add Task
+    </button>
+
+</form>
+
+</div>
+
+</div>
+</section>
+
+<?php include_once "../../includes/elements/footer.php"; ?>
+
+</main>
+
+<?php include_once "../../includes/components/scripts.php"; ?>
+
 </body>
-
 </html>
