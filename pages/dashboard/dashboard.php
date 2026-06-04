@@ -175,6 +175,33 @@
             font-weight: 600;
         }
 
+        .tag-wrap {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            min-width: 140px;
+        }
+
+        .task-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(91, 77, 255, .12);
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .no-tags {
+            color: #94a3b8;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
         .info-btn {
             background: #e0f2fe;
             color: #0284c7;
@@ -442,9 +469,9 @@
                 <div class="row">
                     <?php
                     $stats = [
-                        ["1", "Pending Tasks", "icon-pending", "lni-cart-full"],
-                        ["2", "In-Progress Tasks", "icon-progress", "lni-dollar"],
-                        ["3", "Completed Tasks", "icon-completed", "lni-credit-cards"],
+                        ["1", "Pending Tasks", "icon-pending", "lni-timer"],
+                        ["2", "In-Progress Tasks", "icon-progress", "lni-spinner-arrow"],
+                        ["3", "Completed Tasks", "icon-completed", "lni-checkmark-circle"],
                         ["4", "Incomplete Tasks", "icon-incomplete", "lni-cross-circle"]
                     ];
 
@@ -484,6 +511,7 @@
                             <thead>
                                 <tr>
                                     <th>Task</th>
+                                    <th>Tags</th>
                                     <th>Description</th>
                                     <th>Status</th>
                                     <th>Assigned Member</th>
@@ -513,10 +541,27 @@
                                     };
 
                                     if (can_view_task($conn, $task['task_id'], $user_id, $role)) {
+                                        $task_id = $task['task_id'];
                                         ?>
                                         <tr>
                                             <td>
                                                 <p class="m-1 fw-bold"><?php echo $task['task_name']; ?></p>
+                                            </td>
+                                            <td>
+                                                <div class="tag-wrap">
+                                                    <?php
+                                                    $select_tag_tasks = mysqli_query($conn, "SELECT * FROM task_tags_tbl LEFT JOIN tags_tbl ON tags_tbl.tag_id = task_tags_tbl.tag_id WHERE task_id = '$task_id'");
+                                                    if (mysqli_num_rows($select_tag_tasks) === 0) {
+                                                        ?>
+                                                        <span class="no-tags">No tags</span>
+                                                    <?php }
+                                                    while ($tag = mysqli_fetch_array($select_tag_tasks)) {
+                                                        ?>
+                                                        <span class="task-tag">
+                                                            <?php echo $tag['tag']; ?>
+                                                        </span>
+                                                    <?php } ?>
+                                                </div>
                                             </td>
                                             <td>
                                                 <p class="m-1"><?php echo $task['task_description']; ?></p>
@@ -529,7 +574,6 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <?php
-                                                    $task_id = $task['task_id'];
                                                     $select_members = mysqli_query($conn, "SELECT * FROM task_members_tbl LEFT JOIN users_tbl ON users_tbl.user_id = task_members_tbl.user_id WHERE task_id = '$task_id'");
                                                     while ($row = mysqli_fetch_array($select_members)) {
                                                         ?>
