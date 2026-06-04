@@ -322,6 +322,7 @@ ON task_status_tbl.status_id = tasks_tbl.task_status
                                                 ?>
                                                 <img class="member-img"
                                                     src="<?= get_user_profile_image($conn, $row['user_id']); ?>"
+                                                    alt="<?= $row['full_name']; ?>"
                                                     title="<?= $row['full_name']; ?>">
                                             <?php } ?>
 
@@ -332,16 +333,16 @@ ON task_status_tbl.status_id = tasks_tbl.task_status
 
                                         <div class="action">
 
-                                            <a class="action-btn view" href="task.view.php?id=<?php $task_id; ?>">
+                                            <a class="action-btn view" href="task.view.php?id=<?= $task_id; ?>">
                                                 <i class="lni lni-eye"></i>
                                             </a>
 
-                                            <a class="action-btn edit" href="edit.task.php?task_id=<?php $task_id; ?>">
+                                            <a class="action-btn edit" href="edit.task.php?task_id=<?= $task_id; ?>">
                                                 <i class="lni lni-pencil"></i>
                                             </a>
 
                                             <a class="action-btn delete"
-                                                href="ctrlData/ctrl.delete.task.php?task_id=<?php $task_id; ?>">
+                                                href="ctrlData/ctrl.delete.task.php?task_id=<?= $task_id; ?>">
                                                 <i class="lni lni-trash-can"></i>
                                             </a>
 

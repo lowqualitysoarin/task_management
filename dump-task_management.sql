@@ -50,7 +50,7 @@ CREATE TABLE `tags_tbl` (
   `tag_id` int(11) NOT NULL AUTO_INCREMENT,
   `tag` varchar(255) NOT NULL,
   PRIMARY KEY (`tag_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,7 +168,7 @@ CREATE TABLE `tasks_tbl` (
 
 LOCK TABLES `tasks_tbl` WRITE;
 /*!40000 ALTER TABLE `tasks_tbl` DISABLE KEYS */;
-INSERT INTO `tasks_tbl` VALUES (4,'A New Task','Tasky',1,NULL,'',NULL,NULL,NULL),(5,'Test Task Number 2','Another Test Task',2,NULL,'',NULL,NULL,NULL),(6,'Hellooooo','Hello Task',3,NULL,'',NULL,NULL,NULL),(7,'Omaygot','Ambatunat',4,'1780564274_bitches_be_like.gif','',NULL,NULL,NULL),(11,'Deersicle','._.',3,'','1780425688_zz.jpg','hello po','Mark Unremarkable','2026-06-03 02:41:28'),(19,'Give me Wonderhoi!!','SMIILLEEEEEEEEEe',1,'','1780488171_smayyllll.jpg','HANLOOO IM EMU TORI!!!','Mark Unremarkable','2026-06-03 20:02:51'),(22,'k','Letter k',1,'','',NULL,'',NULL);
+INSERT INTO `tasks_tbl` VALUES (4,'A New Task','Tasky',4,NULL,'',NULL,NULL,NULL),(5,'Test Task Number 2','Another Test Task',2,NULL,'',NULL,NULL,NULL),(6,'Hellooooo','Hello Task',3,NULL,'',NULL,NULL,NULL),(7,'Omaygot','Ambatunat',4,'1780564274_bitches_be_like.gif','',NULL,NULL,NULL),(11,'Deersicle','._.',3,'','1780425688_zz.jpg','hello po','Mark Unremarkable','2026-06-03 02:41:28'),(19,'Give me Wonderhoi!!','SMIILLEEEEEEEEEe',1,'','1780488171_smayyllll.jpg','HANLOOO IM EMU TORI!!!','Mark Unremarkable','2026-06-03 20:02:51'),(22,'k','Letter k',1,'','',NULL,'',NULL);
 /*!40000 ALTER TABLE `tasks_tbl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,7 +198,7 @@ CREATE TABLE `users_tbl` (
 
 LOCK TABLES `users_tbl` WRITE;
 /*!40000 ALTER TABLE `users_tbl` DISABLE KEYS */;
-INSERT INTO `users_tbl` VALUES (5,'Joshua Smith','joshsmith','joshsmith@email.com','$2y$10$qB8QbYFVEvVjP5Z2LzIVX.EzuAVeHE3EI2zj1tveo8iFqoO1u2/BC',1,'houoyoyo','user_5_1780567856.png'),(6,'Mark Unremarkable','unremarkable','unremarkable@mail.com','$2y$10$82hudq8Hdke.EXd38k1wlebJkgIfmYa7B1GPElFz808C9tcx.1XJK',2,'hiiii','user_6_1780552713.png'),(7,'Mark Edward Fischbach','markiplier','mynameiswelcome@yahoo.com','$2y$10$SzppkHZa5glGDrXyVuvcMuLDWo6X3d4Gh950CP3yVWGdvaKAQgWZG',2,'im dead','user_7_1780552723.png'),(8,'Emu otori','emu','taeko@gmail.com','$2y$10$aIinf8tfTtJmv.2aPztPsujmzHtyFnHXY15OcRtBCBIWyABSsAfg2',1,'hii','user_8_1780552705.jpg');
+INSERT INTO `users_tbl` VALUES (5,'Joshua Smith','joshsmith','joshsmith@email.com','$2y$10$qB8QbYFVEvVjP5Z2LzIVX.EzuAVeHE3EI2zj1tveo8iFqoO1u2/BC',1,'houoyoyo','user_5_1780567856.png'),(6,'Mark Unremarkable','unremarkable','unremarkable@mail.com','$2y$10$qWHTcuaDvYjguctTpvbXD.Lm1i9klWeLh1O9Jz32c/SWphPPQ.va6',2,'hiiii','user_6_1780552713.png'),(7,'Mark Edward Fischbach','markiplier','mynameiswelcome@yahoo.com','$2y$10$SzppkHZa5glGDrXyVuvcMuLDWo6X3d4Gh950CP3yVWGdvaKAQgWZG',2,'im dead','user_7_1780552723.png'),(8,'Emu otori','emu','taeko@gmail.com','$2y$10$aIinf8tfTtJmv.2aPztPsujmzHtyFnHXY15OcRtBCBIWyABSsAfg2',1,'hii','user_8_1780552705.jpg');
 /*!40000 ALTER TABLE `users_tbl` ENABLE KEYS */;
 UNLOCK TABLES;
 
