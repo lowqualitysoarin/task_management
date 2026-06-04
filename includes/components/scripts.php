@@ -16,6 +16,9 @@ toastr.options = {
 };
 </script>
 
+<!-- ========= Bootstrap Table ======== -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.27.3/dist/bootstrap-table.min.js"></script>
+
 <!-- ========= CORE JS FILES ======== -->
 <script src="../../assets/js/bootstrap.bundle.min.js"></script>
 <script src="../../assets/js/Chart.min.js"></script>

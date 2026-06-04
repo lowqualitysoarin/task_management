@@ -2,6 +2,7 @@
 <?php include_once "../../includes/session.start.php"; ?>
 <?php include_once "../../includes/utils/login.access.check.php"; ?>
 <?php include_once "../../includes/utils/user.utils.php"; ?>
+<?php include_once "../../includes/utils/db.utils.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -77,7 +78,18 @@
                             ];
 
                             foreach ($stats as $s) {
-                                $count = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tasks_tbl WHERE task_status = '$s[0]'"));
+                                $tasks_num = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tasks_tbl WHERE task_status = '$s[0]'"));
+
+                                $status_num = 0;
+                                if ($_SESSION['role'] == 'Member') {
+                                    foreach (get_member_tasks($conn, $_SESSION['user_id']) as $task) {
+                                        if ($task['task_status'] == $s[0]) {
+                                            $status_num++;
+                                        }
+                                    }
+                                }
+
+                                $count = ($_SESSION['role'] == 'Member') ? $status_num : $tasks_num
                                 ?>
                                 <div class="col-xl-3 col-lg-4 col-sm-6">
                                     <div class="icon-card mb-30">
@@ -90,7 +102,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            <?php } ?>
+                            <?php
+                            }
+                            ?>
 
                         </div>
 
@@ -120,26 +134,11 @@
                                         LEFT JOIN task_status_tbl ON task_status_tbl.status_id = tasks_tbl.task_status
                                         ";
 
-                                        function can_view_task($conn, $task_id, $user_id, $role): bool
-                                        {
-                                            if ($role == "Admin")
-                                                return true;
-
-                                            $task_members = [];
-                                            $select_task_members = mysqli_query($conn, "SELECT * FROM task_members_tbl LEFT JOIN users_tbl ON users_tbl.user_id = task_members_tbl.user_id WHERE task_members_tbl.task_id = '$task_id'");
-                                            while ($row = mysqli_fetch_array($select_task_members)) {
-                                                $task_members[] = $row['user_id'];
-                                            }
-
-                                            return in_array($user_id, $task_members);
-                                        }
-
                                         $user_id = $_SESSION['user_id'];
                                         $role = $_SESSION['role'];
 
                                         $tasks = mysqli_query($conn, $query);
                                         while ($task = mysqli_fetch_array($tasks)) {
-
                                             $status_color = match ((int) $task['task_status']) {
                                                 1 => "info-btn",
                                                 2 => "active-btn",
@@ -235,7 +234,7 @@
                                                                                 value="<?php echo $st['status_id']; ?>" required>
                                                                             <label><?php echo $st['status']; ?></label>
                                                                             <?php if ($task['task_status'] == $st['status_id'])
-                                                                                echo "checked"; ?>>
+                                                                                echo "checked"; ?>
                                                                         </div>
                                                                     <?php } ?>
 

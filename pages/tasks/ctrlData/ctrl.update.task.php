@@ -14,13 +14,13 @@ if (isset($_POST['submit'])) {
     $assigned_member = isset($_POST['assignedmember']) ? $_POST['assignedmember'] : 0;
     $task_status = $_POST['taskstatus'];
     $assignees = isset($_POST['assignees']) ? $_POST['assignees'] : [];
+    $tags = isset($_POST['tags']) ? $_POST['tags'] : [];
 
     mysqli_query(
         $conn,
         "UPDATE tasks_tbl
      SET task_name = '$task_name',
          task_description = '$task_description',
-         task_attachment = '$task_image',
          task_status = '$task_status'
      WHERE task_id = '$task_id'"
     );
@@ -30,6 +30,11 @@ if (isset($_POST['submit'])) {
         mysqli_query($conn, "INSERT INTO task_members_tbl (task_id, user_id) VALUES ('$task_id', '$user_id')");
     }
 
+    mysqli_query($conn, "DELETE FROM task_tags_tbl WHERE task_id = '$task_id'");
+    foreach ($tags as $tag_id) {
+        mysqli_query($conn, "INSERT INTO task_tags_tbl (task_id, tag_id) VALUES ('$task_id', '$tag_id')");
+    }
+ 
     $_SESSION['success'] = "Task updated successfully.";
 
     header("location: ../list.task.php");

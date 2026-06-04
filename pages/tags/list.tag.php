@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>List Tasks</title>
+    <title>Task Management | List Tasks</title>
 
     <?php include_once "../../includes/components/links.php"; ?>
 
@@ -235,8 +235,8 @@
                 </div>
 
                 <div>
-                    <h2 class="header-title">List Tasks</h2>
-                    <p class="header-subtitle">Manage tasks, status and assigned team members</p>
+                    <h2 class="header-title">List Tags</h2>
+                    <p class="header-subtitle">Manage tags</p>
                 </div>
             </div>
 
@@ -244,15 +244,11 @@
             <div class="glass-card">
 
                 <div class="table-responsive">
-                    <table class="table" data-toggle="table" data-search="true" data-filter-control="true">
+                    <table class="table">
 
                         <thead>
                             <tr>
-                                <th>Task</th>
-                                <th>Tags</th>
-                                <th>Description</th>
-                                <th>Status</th>
-                                <th>Members</th>
+                                <th>Tag</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -260,99 +256,29 @@
                         <tbody>
 
                             <?php
-                            $tasks = mysqli_query($conn, "
-SELECT * FROM tasks_tbl
-LEFT JOIN task_status_tbl
-ON task_status_tbl.status_id = tasks_tbl.task_status
-");
-
-                            while ($task = mysqli_fetch_array($tasks)) {
-                                $task_id = $task['task_id'];
+                            $tags = mysqli_query($conn, "SELECT * FROM tags_tbl");
+                            while ($tag = mysqli_fetch_array($tags)) {
                                 ?>
 
                                 <tr>
-
                                     <td>
-                                        <div class="task-name"><?= $task['task_name']; ?></div>
+                                        <div class="tag-name"><?= $tag['tag']; ?></div>
                                     </td>
 
                                     <td>
-                                        <?php
-                                        $select_tag_tasks = mysqli_query($conn, "SELECT * FROM task_tags_tbl LEFT JOIN tags_tbl ON tags_tbl.tag_id = task_tags_tbl.tag_id WHERE task_id = '$task_id'");
-                                        while ($tag = mysqli_fetch_array($select_tag_tasks)) {
-                                            ?>
-                                            <span class="status-btn primary-btn">
-                                                <?php echo $tag['tag']; ?>
-                                            </span>
-                                            <?php
-                                        }
-                                        ?>
-                                    </td>
-
-                                    <td>
-                                        <div class="task-desc"><?= $task['task_description']; ?></div>
-                                    </td>
-
-                                    <td>
-                                        <?php
-                                        $status_color = match ((int) $task['task_status']) {
-                                            1 => "info-btn",
-                                            2 => "active-btn",
-                                            3 => "success-btn",
-                                            4 => "close-btn",
-                                        };
-                                        ?>
-                                        <span class="status-btn <?= $status_color; ?>">
-                                            <?= $task['status']; ?>
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        <div class="d-flex align-items-center">
-
-                                            <?php
-                                            $select_members = mysqli_query($conn, "
-                                            SELECT * FROM task_members_tbl 
-                                            LEFT JOIN users_tbl 
-                                            ON users_tbl.user_id = task_members_tbl.user_id
-                                            WHERE task_id = '$task_id'
-                                            ");
-
-                                            while ($row = mysqli_fetch_array($select_members)) {
-                                                ?>
-                                                <img class="member-img"
-                                                    src="<?= get_user_profile_image($conn, $row['user_id']); ?>"
-                                                    title="<?= $row['full_name']; ?>">
-                                            <?php } ?>
-
-                                        </div>
-                                    </td>
-
-                                    <td>
-
                                         <div class="action">
-
-                                            <a class="action-btn view" href="task.view.php?id=<?php $task_id; ?>">
-                                                <i class="lni lni-eye"></i>
-                                            </a>
-
-                                            <a class="action-btn edit" href="edit.task.php?task_id=<?php $task_id; ?>">
+                                            <a class="action-btn edit"
+                                                href="edit.tag.php?tag_id=<?= $tag['tag_id']; ?>">
                                                 <i class="lni lni-pencil"></i>
                                             </a>
-
                                             <a class="action-btn delete"
-                                                href="ctrlData/ctrl.delete.task.php?task_id=<?php $task_id; ?>">
+                                                href="ctrlData/ctrl.delete.tag.php?tag_id=<?= $tag['tag_id']; ?>">
                                                 <i class="lni lni-trash-can"></i>
                                             </a>
-
                                         </div>
-
                                     </td>
-
                                 </tr>
-
                             <?php } ?>
-
                         </tbody>
                     </table>
                 </div>

@@ -326,9 +326,14 @@ $hasSubmission = $hasText || $hasFile;
 
         <!-- TAGS -->
         <div class="tags">
-            <div class="tag">Task #<?php echo $task['task_id']; ?></div>
-            <div class="tag">Assigned Task</div>
-            <div class="tag">Project Management</div>
+            <?php
+            $select_task_tags = mysqli_query($conn, "SELECT * FROM task_tags_tbl LEFT JOIN tags_tbl ON tags_tbl.tag_id = task_tags_tbl.tag_id WHERE task_id = '$task_id'");
+            while ($tag = mysqli_fetch_array($select_task_tags)) {
+                ?>
+                <div class="tag"><?php echo $tag['tag']; ?></div>
+                <?php
+            }
+            ?>
         </div>
 
         <!-- GRID -->

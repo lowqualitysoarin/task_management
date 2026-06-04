@@ -11,7 +11,7 @@ $task_name = mysqli_real_escape_string($conn, $_POST['taskname']);
 $task_description = mysqli_real_escape_string($conn, $_POST['taskdescription']);
 
 $assignees = isset($_POST['assignees']) ? $_POST['assignees'] : [];
-
+$tags = isset($_POST['tags']) ? $_POST['tags'] : [];
 
 $task_status = 1;
 
@@ -90,11 +90,11 @@ mysqli_query(
         0
     )"
 );
+
 /*
 | INSERT TASK MEMBERS
 */
 foreach ($assignees as $user_id) {
-
     mysqli_query(
         $conn,
         "INSERT INTO task_members_tbl
@@ -106,6 +106,25 @@ foreach ($assignees as $user_id) {
         (
             '$next_id',
             '$user_id'
+        )"
+    );
+}
+
+/*
+| INSERT TASK TAGS
+*/
+foreach ($tags as $tag_id) {
+    mysqli_query(
+        $conn,
+        "INSERT INTO task_tags_tbl
+        (
+            task_id,
+            tag_id
+        )
+        VALUES
+        (
+            '$next_id',
+            '$tag_id'
         )"
     );
 }

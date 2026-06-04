@@ -64,6 +64,24 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="nav-item nav-item-has-children">
+                    <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#tagsmenu"
+                        aria-controls="tagsmenu" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icon">
+                            <i class="lni lni-tag"></i>
+                        </span>
+                        <span class="text"> Tags </span>
+                    </a>
+                    <ul id="tagsmenu" class="collapse dropdown-nav">
+                        <li>
+                            <a href="../tags/add.tag.php"> Add Tag </a>
+                        </li>
+                        <li>
+                            <a href="../tags/list.tag.php"> List Tags </a>
+                        </li>
+                    </ul>
+                </li>
                 <?php
             }
             ?>

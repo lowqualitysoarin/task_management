@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Task Management | Add Task</title>
+    <title>Task Management | Add Tag</title>
 
     <?php include_once "../../includes/components/links.php"; ?>
 
@@ -202,146 +202,55 @@
                 <!-- HEADER -->
                 <div class="page-header">
                     <div class="header-icon">
-                        <i class="lni lni-clipboard"></i>
+                        <i class="lni lni-tag"></i>
                     </div>
                     <div>
-                        <h2 class="header-title">Add New Task</h2>
-                        <p class="header-subtitle">Create and assign tasks to team members ✨</p>
+                        <h2 class="header-title">Add New Tag</h2>
+                        <p class="header-subtitle">Create a tag to categorize tasks ✨</p>
                     </div>
                 </div>
 
                 <!-- FORM CARD -->
                 <div class="glass-card">
-
-                    <form action="ctrlData/ctrl.add.task.php" method="POST" enctype="multipart/form-data">
-
+                    <form action="ctrlData/ctrl.add.tag.php" method="POST" enctype="multipart/form-data">
                         <!-- TASK INFO -->
                         <div class="section-head">
-                            <div class="section-icon"><i class="lni lni-clipboard"></i></div>
+                            <div class="section-icon"><i class="lni lni-tag"></i></div>
                             <div>
-                                <h5>Task Information</h5>
-                                <p>Enter task details</p>
+                                <h5>Tag Information</h5>
+                                <p>Enter tag name</p>
                             </div>
                         </div>
 
                         <hr>
 
                         <div class="row">
-
                             <div class="col-md-12 mb-3">
-                                <label class="form-label">Task Name</label>
+                                <label class="form-label">Tag Name</label>
                                 <div class="input-group-custom">
                                     <i class="lni lni-pencil"></i>
-                                    <input type="text" name="taskname" class="input-custom" required>
+                                    <input type="text" name="tagname" class="input-custom" required>
                                 </div>
                             </div>
-
-                            <div class="col-md-12 mb-3">
-                                <label class="form-label">Task Description</label>
-                                <div class="input-group-custom">
-                                    <i class="lni lni-text-format"></i>
-                                    <textarea name="taskdescription" placeholder="Write task details..."></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                <label class="form-label">Attachment</label>
-                                <input type="file" name="attachment"
-                                    accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx">
-                                <div class="small-note">Allowed: JPG, PNG, PDF, DOC, XLS</div>
-                            </div>
-
-                        </div>
-
-                        <!-- ASSIGN -->
-                        <div class="section-head mt-3">
-                            <div class="section-icon"><i class="lni lni-users"></i></div>
-                            <div>
-                                <h5>Assign Members</h5>
-                                <p>Select team members for this task</p>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="dropdown mb-3">
-                            <button class="btn btn-secondary w-100" type="button" data-bs-toggle="dropdown">
-                                Select Assignees
-                            </button>
-
-                            <ul class="dropdown-menu w-100" style="max-height:220px; overflow:auto;">
-                                <?php
-                                $select_users = mysqli_query(
-                                    $conn,
-                                    "SELECT * FROM users_tbl 
-                 LEFT JOIN roles_tbl ON roles_tbl.role_id = users_tbl.role"
-                                );
-
-                                while ($user = mysqli_fetch_array($select_users)) {
-                                    if ($user['role'] != "Admin") {
-                                        $checkbox_id = "assignee" . $user['user_id'];
-                                        ?>
-                                        <li>
-                                            <div class="form-check m-2">
-                                                <input class="form-check-input" type="checkbox" id="<?= $checkbox_id; ?>"
-                                                    value="<?= $user['user_id']; ?>" name="assignees[]">
-                                                <label class="form-check-label" for="<?= $checkbox_id; ?>">
-                                                    <?= $user['full_name']; ?>
-                                                </label>
-                                            </div>
-                                        </li>
-                                    <?php }
-                                } ?>
-                            </ul>
-                        </div>
-
-                        <br>
-
-                        <div class="section-head mt-3">
-                            <div class="section-icon"><i class="lni lni-tag"></i></div>
-                            <div>
-                                <h5>Add Tags</h5>
-                                <p>Add tags to categorize your task</p>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="dropdown mb-3">
-                            <button class="btn btn-secondary w-100" type="button" data-bs-toggle="dropdown">
-                                Select Tags
-                            </button>
-
-                            <ul class="dropdown-menu w-100" style="max-height:220px; overflow:auto;">
-                                <?php
-                                $tags = mysqli_query($conn, "SELECT * FROM tags_tbl");
-                                while ($tag = mysqli_fetch_array($tags)) {
-                                    $checkbox_id = "tag" . $tag['tag_id'];
-                                    ?>
-                                    <li>
-                                        <div class="form-check m-2">
-                                            <input class="form-check-input" type="checkbox" id="<?= $checkbox_id; ?>"
-                                                value="<?= $tag['tag_id']; ?>" name="tags[]">
-                                            <label class="form-check-label" for="<?= $checkbox_id; ?>">
-                                                <?= $tag['tag']; ?>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <?php
-                                } ?>
-                            </ul>
                         </div>
 
                         <button type="submit" name="submit" class="btn-add">
-                            <i class="lni lni-plus"></i> Add Task
+                            <i class="lni lni-plus"></i> Add Tag
                         </button>
+
                     </form>
+
                 </div>
+
             </div>
         </section>
+
         <?php include_once "../../includes/elements/footer.php"; ?>
+
     </main>
+
     <?php include_once "../../includes/components/scripts.php"; ?>
+
 </body>
 
 </html>

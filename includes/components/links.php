@@ -5,3 +5,13 @@
 <link rel="stylesheet" href="../../assets/css/fullcalendar.css" />
 <link rel="stylesheet" href="../../assets/css/fullcalendar.css" />
 <link rel="stylesheet" href="../../assets/css/main.css" />
+
+<!-- ========== Global Custom ========= -->
+<style>
+    .square-container {
+        max-width: 300px;
+    }
+</style>
+
+<!-- ========== Bootstrap Table ========= -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.27.3/dist/bootstrap-table.min.css">
