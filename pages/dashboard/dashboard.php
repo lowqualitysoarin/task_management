@@ -57,7 +57,7 @@
                         <?php } ?>
 
                         <!-- TITLE -->
-                        <div class="title-wrapper pt-30">
+                        <div class="title-wrapper pt-30 mb-3">
                             <div class="row align-items-center">
                                 <div class="col-md-6">
                                     <h2>Dashboard</h2>

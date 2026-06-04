@@ -347,15 +347,17 @@ $hasSubmission = $hasText || $hasFile;
 
                 <!-- ATTACHMENTS -->
                 <div class="card">
-                    
                     <div class="card-title">
                         <i class="las la-paperclip"></i> Attachments
                     </div>
-                    <?php if (!empty($task['task_image'])) { ?>
-                        <a href="../../uploads/attachments/<?php echo $task['task_image']; ?>" target="_blank"
-                            class="btn btn-success">
-                            <i class="las la-eye"></i> View Attachment
-                        </a>
+                    <?php if (!empty($task['task_image'])) { 
+                        $task_image = get_task_attachment_image($conn, $task['task_id']);
+                        if (isset($task_image)) {
+                            ?>
+                            <img class="img-thumbnail mx-auto d-block" src="<?php echo $task_image; ?>" style="height: 50%; width 50%;">
+                            <?php
+                        }
+                        ?>
                     <?php } else { ?>
                         <div class="no-image">
                             <i class="las la-image"></i>
