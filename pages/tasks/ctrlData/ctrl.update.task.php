@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
         "UPDATE tasks_tbl
      SET task_name = '$task_name',
          task_description = '$task_description',
-         task_image = '$task_image',
+         task_attachment = '$task_image',
          task_status = '$task_status'
      WHERE task_id = '$task_id'"
     );
@@ -70,7 +70,7 @@ if (isset($_POST['submitattachment'])) {
     mysqli_query(
         $conn,
         "UPDATE tasks_tbl SET
-        task_image = '$attachment'
+        task_attachment = '$attachment'
         WHERE task_id = '$task_id'"
     );
 

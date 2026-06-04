@@ -3,6 +3,7 @@ session_start();
 
 require_once "../../includes/conn.php";
 include_once "../../includes/utils/user.utils.php";
+include_once "../../includes/utils/file.utils.php";
 
 if (!isset($_GET['id'])) {
     die("Task ID not found.");
@@ -350,20 +351,7 @@ $hasSubmission = $hasText || $hasFile;
                     <div class="card-title">
                         <i class="las la-paperclip"></i> Attachments
                     </div>
-                    <?php if (!empty($task['task_image'])) { 
-                        $task_image = get_task_attachment_image($conn, $task['task_id']);
-                        if (isset($task_image)) {
-                            ?>
-                            <img class="img-thumbnail mx-auto d-block" src="<?php echo $task_image; ?>" style="height: 50%; width 50%;">
-                            <?php
-                        }
-                        ?>
-                    <?php } else { ?>
-                        <div class="no-image">
-                            <i class="las la-image"></i>
-                            <p>No attachment uploaded.</p>
-                        </div>
-                    <?php } ?>
+                    <?php echo preview_file($task['task_attachment'], '/task_management/uploads/attachments/'); ?>
                 </div>
 
                 <!-- TASK SUBMISSION -->
@@ -543,7 +531,7 @@ $hasSubmission = $hasText || $hasFile;
                         <div class="info-item">
                             <div class="info-label">Attachment</div>
                             <div class="info-value">
-                                <?php echo !empty($task['task_image']) ? 'Available' : 'None'; ?>
+                                <?php echo !empty($task['task_attachment']) ? 'Available' : 'None'; ?>
                             </div>
                         </div>
                     </div>

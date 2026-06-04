@@ -78,7 +78,7 @@ mysqli_query(
         task_name,
         task_description,
         task_status,
-        task_image,
+        task_attachment,
         task_submit
     )
     VALUES

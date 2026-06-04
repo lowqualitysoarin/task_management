@@ -6,16 +6,16 @@ if(isset($_GET['id']))
     $task_id = mysqli_real_escape_string($conn,$_GET['id']);
 
     $query = mysqli_query($conn,"
-        SELECT task_image
+        SELECT task_attachment
         FROM tasks_tbl
         WHERE task_id='$task_id'
     ");
 
     $row = mysqli_fetch_assoc($query);
 
-    if(!empty($row['task_image']))
+    if(!empty($row['task_attachment']))
     {
-        $file = "../../uploads/attachments/".$row['task_image'];
+        $file = "../../uploads/attachments/".$row['task_attachment'];
 
         if(file_exists($file))
         {
@@ -25,7 +25,7 @@ if(isset($_GET['id']))
 
         mysqli_query($conn,"
             UPDATE tasks_tbl
-            SET task_image=NULL
+            SET task_attachment=NULL
             WHERE task_id='$task_id'
         ");
     }

@@ -187,10 +187,10 @@
                                 <div class="card-style mb-30">
                                     <h6 class="mb-25">Task Image</h6>
                                     <div class="card-style mb-30">
-                                        <?php if (!empty($task['task_image'])) { ?>
+                                        <?php if (!empty($task['task_attachment'])) { ?>
                                             <div class="mb-3">
                                                 <strong class="mb-2">Current Attachment:</strong>
-                                                <a href="../../uploads/attachments/<?php echo $task['task_image']; ?>" target="_blank"
+                                                <a href="/task_management/uploads/attachments/<?php echo $task['task_attachment']; ?>" target="_blank"
                                                     class="btn btn-success">
                                                     View
                                                 </a>

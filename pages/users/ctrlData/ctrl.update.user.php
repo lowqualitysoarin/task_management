@@ -75,13 +75,13 @@ if (isset($_POST['submitprofile'])) {
     $new_file_name = "user_" . $user_id . "_" . time() . "." . $file_ext;
 
     $upload_file_path = $_SERVER['DOCUMENT_ROOT'] . '/task_management/uploads/profiles/' . $new_file_name;
-    $file_path = "uploads/profiles/" . $new_file_name;
+    $file = $new_file_name;
 
     if (move_uploaded_file($file_temp_name, $upload_file_path)) {
 
         $query = mysqli_query($conn, "
             UPDATE users_tbl 
-            SET profile = '$file_path' 
+            SET profile = '$file' 
             WHERE user_id = '$user_id'
         ");
 
