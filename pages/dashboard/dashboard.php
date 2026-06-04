@@ -510,11 +510,11 @@
                         <table class="table" data-toggle="table" data-search="true" data-filter-control="true">
                             <thead>
                                 <tr>
-                                    <th>Task</th>
-                                    <th>Tags</th>
-                                    <th>Description</th>
-                                    <th>Status</th>
-                                    <th>Assigned Member</th>
+                                    <th data-sortable="true">Task</th>
+                                    <th data-sortable="true">Tags</th>
+                                    <th data-sortable="true">Description</th>
+                                    <th data-sortable="true">Status</th>
+                                    <th data-sortable="true">Assigned Member</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
