@@ -162,7 +162,7 @@ session_start();
             margin-bottom: 20px;
         }
 
-        .glass-input i {
+        .glass-input i.field-icon {
             position: absolute;
             left: 16px;
             top: 50%;
@@ -181,6 +181,7 @@ session_start();
             background: rgba(255, 255, 255, .80);
 
             padding-left: 48px;
+            padding-right: 48px;
 
             transition: .3s;
             color: #1e293b;
@@ -193,6 +194,16 @@ session_start();
 
             box-shadow:
                 0 0 0 4px rgba(79, 70, 229, .12);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            cursor: pointer;
+            z-index: 2;
         }
 
         .login-btn {
@@ -330,7 +341,7 @@ session_start();
                         </label>
 
                         <div class="glass-input">
-                            <i class="fa-solid fa-user"></i>
+                            <i class="fa-solid fa-user field-icon"></i>
 
                             <input
                                 type="text"
@@ -344,13 +355,16 @@ session_start();
                         </label>
 
                         <div class="glass-input">
-                            <i class="fa-solid fa-lock"></i>
+                            <i class="fa-solid fa-lock field-icon"></i>
 
                             <input
                                 type="password"
                                 name="password"
+                                id="password"
                                 placeholder="Enter Password"
                                 required>
+
+                            <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
                         </div>
 
                         <button
@@ -378,6 +392,18 @@ session_start();
 
     <?php include_once "../../includes/components/scripts.php"; ?>
 
-</body>
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
 
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+
+</body>
 </html>
+

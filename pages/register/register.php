@@ -153,7 +153,7 @@ session_start();
             margin-bottom: 18px;
         }
 
-        .glass-input i {
+        .glass-input i.field-icon {
             position: absolute;
             left: 16px;
             top: 50%;
@@ -171,6 +171,7 @@ session_start();
             background: rgba(255, 255, 255, .80);
 
             padding-left: 48px;
+            padding-right: 48px;
 
             transition: .3s;
         }
@@ -182,6 +183,16 @@ session_start();
 
             box-shadow:
                 0 0 0 4px rgba(79, 70, 229, .12);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            cursor: pointer;
+            z-index: 2;
         }
 
         .register-btn {
@@ -284,39 +295,36 @@ session_start();
             <?php } ?>
 
             <form action="ctrlData/ctrl.register.php" method="POST">
-                <!-- FULL NAME -->
                 <label class="input-label">Full Name</label>
                 <div class="glass-input">
-                    <i class="fa-solid fa-user"></i>
+                    <i class="fa-solid fa-user field-icon"></i>
                     <input type="text" name="fullname" placeholder="Full Name" required>
                 </div>
 
-                <!-- USERNAME -->
                 <label class="input-label">Username</label>
                 <div class="glass-input">
-                    <i class="fa-solid fa-at"></i>
+                    <i class="fa-solid fa-at field-icon"></i>
                     <input type="text" name="username" placeholder="Username" required>
                 </div>
 
-                <!-- EMAIL -->
                 <label class="input-label">Email</label>
                 <div class="glass-input">
-                    <i class="fa-solid fa-envelope"></i>
+                    <i class="fa-solid fa-envelope field-icon"></i>
                     <input type="email" name="email" placeholder="Email Address" required>
                 </div>
 
-                <!-- PASSWORD -->
                 <label class="input-label">Password</label>
                 <div class="glass-input">
-                    <i class="fa-solid fa-lock"></i>
+                    <i class="fa-solid fa-lock field-icon"></i>
                     <input type="password" name="password" id="password" placeholder="Password" required>
+                    <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
                 </div>
 
-                <!-- CONFIRM PASSWORD -->
                 <label class="input-label">Confirm Password</label>
                 <div class="glass-input">
-                    <i class="fa-solid fa-lock"></i>
+                    <i class="fa-solid fa-lock field-icon"></i>
                     <input type="password" id="confirmpassword" placeholder="Confirm Password" required>
+                    <i class="fa-solid fa-eye toggle-password" id="toggleConfirmPassword"></i>
                 </div>
 
                 <p id="passwordfeedback"></p>
@@ -347,6 +355,9 @@ session_start();
     const submitBtn = document.getElementById("submit");
     const passFeedback = document.getElementById("passwordfeedback");
 
+    const togglePassword = document.getElementById("togglePassword");
+    const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
+
     function validatePassword() {
         const passValue = passInput.value;
         const confirmValue = confirmInput.value;
@@ -367,9 +378,24 @@ session_start();
 
     passInput.addEventListener("input", validatePassword);
     confirmInput.addEventListener("input", validatePassword);
+
+    togglePassword.addEventListener("click", function () {
+        const type = passInput.getAttribute("type") === "password" ? "text" : "password";
+        passInput.setAttribute("type", type);
+        this.classList.toggle("fa-eye");
+        this.classList.toggle("fa-eye-slash");
+    });
+
+    toggleConfirmPassword.addEventListener("click", function () {
+        const type = confirmInput.getAttribute("type") === "password" ? "text" : "password";
+        confirmInput.setAttribute("type", type);
+        this.classList.toggle("fa-eye");
+        this.classList.toggle("fa-eye-slash");
+    });
 </script>
 
 <?php include_once "../../includes/components/scripts.php"; ?>
 
 </body>
 </html>
+
