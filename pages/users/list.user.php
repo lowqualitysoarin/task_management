@@ -16,9 +16,7 @@
 
 <style>
 
-/* =========================
-   DESIGN SYSTEM (MATCH ADD USER)
-========================= */
+
 :root{
     --primary:#5b4dff;
     --secondary:#3f8cff;
@@ -30,9 +28,7 @@ body{
     background:#f5f7ff;
 }
 
-/* =========================
-   HEADER (SOFT PRO GRADIENT)
-========================= */
+
 .page-header{
     background:linear-gradient(135deg,var(--primary),var(--secondary));
     border-radius:18px;
@@ -56,7 +52,6 @@ body{
     font-size:24px;
 }
 
-/* 🔥 FIX: softer typography (not harsh black look) */
 .header-title{
     font-size:1.5rem;
     font-weight:700;
@@ -81,9 +76,7 @@ body{
     box-shadow:0 10px 30px rgba(0,0,0,.06);
 }
 
-/* =========================
-   TABLE STYLE (MODERN SAAS)
-========================= */
+
 .table{
     border-collapse:separate;
     border-spacing:0 12px;
@@ -91,7 +84,7 @@ body{
 
 .table thead th{
     font-size:12px;
-    color:#94a3b8; /* lighter header text */
+    color:#94a3b8; 
     text-transform:uppercase;
     letter-spacing:.5px;
     border:none !important;
@@ -116,9 +109,7 @@ body{
     padding:14px;
 }
 
-/* =========================
-   USER CELL (CLEAN + MODERN)
-========================= */
+
 .user-box{
     display:flex;
     align-items:center;
@@ -164,7 +155,7 @@ body{
 }
 
 /* =========================
-   ACTION BUTTONS (PRO UI)
+   ACTION BUTTONS 
 ========================= */
 .action{
     display:flex;

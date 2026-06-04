@@ -17,7 +17,7 @@
 <style>
 
 /* =========================
-   DESIGN SYSTEM (MATCH ADD USER)
+   DESIGN SYSTEM 
 ========================= */
 :root{
     --primary:#5b4dff;
@@ -31,7 +31,7 @@ body{
 }
 
 /* =========================
-   PAGE HEADER (MORE PRO + SOFT TEXT)
+   PAGE HEADER 
 ========================= */
 .page-header{
     background:linear-gradient(135deg,var(--primary),var(--secondary));
@@ -56,7 +56,7 @@ body{
     font-size:24px;
 }
 
-/* 🔥 FIX: softer typography (NOT harsh black look) */
+
 .header-title{
     font-size:1.5rem;
     font-weight:700;
@@ -83,7 +83,7 @@ body{
 }
 
 /* =========================
-   TABLE (SAAS STYLE)
+   TABLE
 ========================= */
 .table{
     border-collapse:separate;
@@ -92,7 +92,7 @@ body{
 
 .table thead th{
     font-size:12px;
-    color:#94a3b8; /* lighter header text (NOT black) */
+    color:#94a3b8; 
     text-transform:uppercase;
     letter-spacing:.5px;
     border:none !important;
@@ -118,7 +118,7 @@ body{
 }
 
 /* =========================
-   TASK TEXT STYLE (SOFT LOOK)
+   TASK TEXT STYLE 
 ========================= */
 .task-name{
     font-weight:600;
@@ -146,7 +146,7 @@ body{
 .close-btn{ background:rgba(239,68,68,.12); color:#ef4444; }
 
 /* =========================
-   MEMBERS (STACKED PRO LOOK)
+   MEMBERS 
 ========================= */
 .member-img{
     width:34px;
@@ -162,7 +162,7 @@ body{
 }
 
 /* =========================
-   ACTION BUTTONS (CLEAN PRO STYLE)
+   ACTION BUTTONS 
 ========================= */
 .action{
     display:flex;

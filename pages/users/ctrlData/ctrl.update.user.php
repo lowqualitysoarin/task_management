@@ -116,10 +116,7 @@ if (isset($_POST['deleteprofile'])) {
 }
 
 
-/* =========================
-   UPDATE BIO (FIXED)
-   → THIS IS YOUR ISSUE FIX
-========================= */
+
 if (isset($_POST['submitbio'])) {
 
     $bio = mysqli_real_escape_string($conn, $_POST['bio']);

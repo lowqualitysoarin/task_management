@@ -27,7 +27,7 @@ body{
     background:#f5f7ff;
 }
 
-/* ================= HEADER (LIKE ADD USER STYLE) ================= */
+/* ================= HEADER ================= */
 .page-header{
     background:linear-gradient(135deg,var(--primary),var(--secondary));
     border-radius:18px;
@@ -180,7 +180,6 @@ input[type="file"]{
     transform:translateY(-2px);
 }
 
-/* BADGE STYLE FEEL (optional visual polish) */
 .small-note{
     font-size:12px;
     color:var(--muted);

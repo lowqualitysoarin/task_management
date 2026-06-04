@@ -29,7 +29,7 @@ session_start();
             height: 100%;
         }
 
-        /* RIGHT SIDE BACKGROUND */
+       
         .login-side {
             background:
                 radial-gradient(circle at top left,

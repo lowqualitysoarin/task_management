@@ -347,6 +347,7 @@ $hasSubmission = $hasText || $hasFile;
 
                 <!-- ATTACHMENTS -->
                 <div class="card">
+                    
                     <div class="card-title">
                         <i class="las la-paperclip"></i> Attachments
                     </div>
