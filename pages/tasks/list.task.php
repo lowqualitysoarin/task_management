@@ -122,7 +122,7 @@ body{
 ========================= */
 .task-name{
     font-weight:600;
-    color:#1f2937; /* soft dark, not pure black */
+    color:#1f2937; 
 }
 
 .task-desc{
