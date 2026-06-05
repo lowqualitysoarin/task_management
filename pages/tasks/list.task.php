@@ -163,16 +163,31 @@
    MEMBERS 
 ========================= */
         .member-img {
+            display: inline-block;
             width: 34px;
             height: 34px;
-            border-radius: 50%;
-            border: 2px solid #eef2ff;
             margin-left: -6px;
             transition: .2s;
+            vertical-align: middle;
         }
 
         .member-img:first-child {
             margin-left: 0;
+        }
+
+        .member-img img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #eef2ff;
+            object-fit: cover;
+            display: block;
+        }
+
+        .member-img:hover {
+            transform: translateY(-2px);
+            position: relative;
+            z-index: 10;
         }
 
         /* =========================
@@ -214,6 +229,25 @@
             color: #ef4444;
             border: none;
         }
+
+        .task-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(91, 77, 255, .12);
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .no-tags {
+            color: #94a3b8;
+            font-size: 13px;
+            white-space: nowrap;
+        }
     </style>
 </head>
 
@@ -248,11 +282,11 @@
 
                         <thead>
                             <tr>
-                                <th>Task</th>
-                                <th>Tags</th>
-                                <th>Description</th>
-                                <th>Status</th>
-                                <th>Members</th>
+                                <th data-sortable="true">Task</th>
+                                <th data-sortable="true">Tags</th>
+                                <th data-sortable="true">Description</th>
+                                <th data-sortable="true">Status</th>
+                                <th data-sortable="true">Members</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -279,12 +313,18 @@ ON task_status_tbl.status_id = tasks_tbl.task_status
                                     <td>
                                         <?php
                                         $select_tag_tasks = mysqli_query($conn, "SELECT * FROM task_tags_tbl LEFT JOIN tags_tbl ON tags_tbl.tag_id = task_tags_tbl.tag_id WHERE task_id = '$task_id'");
-                                        while ($tag = mysqli_fetch_array($select_tag_tasks)) {
+                                        if (mysqli_num_rows($select_tag_tasks) == 0) {
                                             ?>
-                                            <span class="status-btn primary-btn">
-                                                <?php echo $tag['tag']; ?>
-                                            </span>
+                                            <span class="no-tags">No tags</span>
                                             <?php
+                                        } else {
+                                            while ($tag = mysqli_fetch_array($select_tag_tasks)) {
+                                                ?>
+                                                <span class="task-tag">
+                                                    <?php echo $tag['tag']; ?>
+                                                </span>
+                                                <?php
+                                            }
                                         }
                                         ?>
                                     </td>
@@ -320,12 +360,15 @@ ON task_status_tbl.status_id = tasks_tbl.task_status
 
                                             while ($row = mysqli_fetch_array($select_members)) {
                                                 ?>
-                                                <img class="member-img"
-                                                    src="<?= get_user_profile_image($conn, $row['user_id']); ?>"
-                                                    alt="<?= $row['full_name']; ?>"
-                                                    title="<?= $row['full_name']; ?>">
-                                            <?php } ?>
-
+                                                <a class="member-img"
+                                                    href="../profile/profile.php?user_id=<?= $row['user_id']; ?>">
+                                                    <img
+                                                        src="<?= get_user_profile_image($conn, $row['user_id']); ?>"
+                                                        alt="<?= $row['full_name']; ?>" title="<?= $row['full_name']; ?>">
+                                                </a>
+                                                <?php
+                                            }
+                                            ?>
                                         </div>
                                     </td>
 

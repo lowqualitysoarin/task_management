@@ -244,17 +244,14 @@
             <div class="glass-card">
 
                 <div class="table-responsive">
-                    <table class="table">
-
+                    <table class="table" data-toggle="table" data-search="true" data-filter-control="true">
                         <thead>
                             <tr>
-                                <th>Tag</th>
+                                <th data-sortable="true">Tag</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-
                         <tbody>
-
                             <?php
                             $tags = mysqli_query($conn, "SELECT * FROM tags_tbl");
                             while ($tag = mysqli_fetch_array($tags)) {

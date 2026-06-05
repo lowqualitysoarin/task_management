@@ -224,8 +224,8 @@
                     <table class="table" data-toggle="table" data-search="true" data-filter-control="true">
                         <thead>
                             <tr>
-                                <th>User</th>
-                                <th>Username</th>
+                                <th data-sortable="true">User</th>
+                                <th data-sortable="true">Username</th>
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Action</th>

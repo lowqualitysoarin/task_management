@@ -151,6 +151,9 @@ session_start();
         .glass-input {
             position: relative;
             margin-bottom: 18px;
+
+            --input-focus-color: #4f46e5;
+            --input-focus-shadow: rgba(79, 70, 229, .12);
         }
 
         .glass-input i.field-icon {
@@ -179,10 +182,8 @@ session_start();
         .glass-input input:focus {
             outline: none;
 
-            border-color: #4f46e5;
-
-            box-shadow:
-                0 0 0 4px rgba(79, 70, 229, .12);
+            border-color: var(--input-focus-color);
+            box-shadow: 0 0 0 4px var(--input-focus-shadow);
         }
 
         .toggle-password {
@@ -358,6 +359,8 @@ session_start();
     const togglePassword = document.getElementById("togglePassword");
     const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
 
+    const confirmContainer = confirmInput.closest('.glass-input');
+
     function validatePassword() {
         const passValue = passInput.value;
         const confirmValue = confirmInput.value;
@@ -365,15 +368,33 @@ session_start();
         if (confirmValue === "") {
             passFeedback.innerText = "";
             submitBtn.disabled = true;
+
+            confirmContainer.style.removeProperty("--input-focus-color");
+            confirmContainer.style.removeProperty("--input-focus-shadow");
+
             return;
         }
 
         const mismatch = passValue !== confirmValue;
+        if (passValue === confirmValue) {
+            // Match
+            passFeedback.innerText = "";
+            passFeedback.style.color = "green";
 
-        passFeedback.innerText = mismatch ? "Passwords do not match" : "";
-        passFeedback.style.color = mismatch ? "red" : "green";
+            confirmContainer.style.setProperty("--input-focus-color", "#7ce56c");
+            confirmContainer.style.setProperty("--input-focus-shadow", "#90f7809c");
 
-        submitBtn.disabled = mismatch;
+            submitBtn.disabled = false;
+        } else {
+            // Mismatch
+            passFeedback.innerText = "Passwords do not match";
+            passFeedback.style.color = "red";
+
+            confirmContainer.style.setProperty("--input-focus-color", "#e25a5a");
+            confirmContainer.style.setProperty("--input-focus-shadow", "#f57575b6");
+
+            submitBtn.disabled = true;
+        }
     }
 
     passInput.addEventListener("input", validatePassword);

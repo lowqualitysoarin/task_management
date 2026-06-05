@@ -299,13 +299,39 @@ $hasSubmission = $hasText || $hasFile;
             border-radius: 10px;
             padding: 10px;
         }
+
+        .member-img {
+            display: inline-block;
+            width: 34px;
+            height: 34px;
+            margin-left: -6px;
+            transition: .2s;
+            vertical-align: middle;
+        }
+
+        .member-img:first-child {
+            margin-left: 0;
+        }
+
+        .member-img img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #eef2ff;
+            object-fit: cover;
+            display: block;
+        }
+
+        .member-img:hover {
+            transform: translateY(-2px);
+            position: relative;
+            z-index: 10;
+        }
     </style>
 </head>
 
 <body>
-
     <div class="wrapper">
-
         <!-- TOPBAR -->
         <div class="topbar">
             <a href="../dashboard/dashboard.php" class="back-btn">
@@ -456,14 +482,14 @@ $hasSubmission = $hasText || $hasFile;
                             <?php } ?>
 
                             <?php if (!empty($task['task_submit'])) { ?>
-                                 <a href="../../uploads/submissions/<?php echo $task['task_submit']; ?>" target="_blank"
-                                            class="btn btn-success">
+                                <a href="../../uploads/submissions/<?php echo $task['task_submit']; ?>" target="_blank"
+                                    class="btn btn-success">
 
-                                            <i class="las la-eye"></i>
+                                    <i class="las la-eye"></i>
 
-                                            View Attachment
+                                    View Attachment
 
-                                        </a>
+                                </a>
                             <?php } ?>
 
                             <div class="mt-2">
@@ -510,12 +536,11 @@ $hasSubmission = $hasText || $hasFile;
                                     if ($members_num != 0) {
                                         while ($row = mysqli_fetch_array($select_members)) {
                                             ?>
-                                            <div class="text-center mx-1">
-                                                <img class="rounded-circle"
-                                                    src="<?php echo get_user_profile_image($conn, $row['user_id']); ?>"
+                                            <a href="../profile/profile.php?user_id=<?= $row['user_id']; ?>" class="member-img">
+                                                <img src="<?php echo get_user_profile_image($conn, $row['user_id']); ?>"
                                                     alt="<?php echo $row['full_name']; ?>"
                                                     title="<?php echo $row['full_name']; ?>" style="width:35px; height:35px;">
-                                            </div>
+                                            </a>
                                             <?php
                                         }
                                     } else {
