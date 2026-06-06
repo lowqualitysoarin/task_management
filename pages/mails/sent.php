@@ -48,7 +48,6 @@ $mails = mysqli_query($conn, "
         .status-btn { padding:5px 12px; border-radius:999px; font-size:12px; font-weight:700; }
         .unread { background:#e2e8f0; color:#475569; }
         .read { background:rgba(91,77,255,.12); color:var(--primary); }
-        .unread { background:rgba(91,77,255,.12); color:var(--primary); }
         .action { display:flex; align-items:center; gap:10px; }
         .action-btn { width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:10px; transition:.2s ease; text-decoration:none; border:none; }
         .view { background:#ecfdf5; color:#10b981; }
