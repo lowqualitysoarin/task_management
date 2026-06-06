@@ -177,36 +177,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
             <?php
             $is_mails_active = in_array($current_page, ['inbox.php', 'sent.php', 'compose.mail.php', 'view.mail.php']);
-            ?>
-
-            <li class="nav-item nav-item-has-children">
-                <a href="#0"
-                   class="<?php echo $is_mails_active ? 'active-link current' : 'collapsed'; ?>"
-                   data-bs-toggle="collapse"
-                   data-bs-target="#mailsmenu"
-                   aria-controls="mailsmenu"
-                   aria-expanded="<?php echo $is_mails_active ? 'true' : 'false'; ?>"
-                   aria-label="Toggle navigation">
-                    <span class="icon">
-                        <i class="lni lni-envelope"></i>
-                    </span>
-                    <span class="text">Mails</span>
-                </a>
-
-                <ul id="mailsmenu" class="collapse dropdown-nav <?php echo $is_mails_active ? 'show' : ''; ?>">
-                    <li>
-                        <a href="../mails/inbox.php">Inbox</a>
-                    </li>
-                    <li>
-                        <a href="../mails/sent.php">Sent</a>
-                    </li>
-                    <li>
-                        <a href="../mails/compose.mail.php">Compose Mail</a>
-                    </li>
-                </ul>
-            </li>
-
-            <?php
             if (isset($_SESSION['role']) && $_SESSION['role'] == "Admin") {
                 $is_users_active = in_array($current_page, ['add.user.php','list.user.php']);
                 $is_tasks_active = in_array($current_page, ['add.task.php','list.task.php']);
@@ -281,6 +251,33 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <?php
             }
             ?>
+
+            <li class="nav-item nav-item-has-children">
+                <a href="#0"
+                   class="<?php echo $is_mails_active ? 'active-link current' : 'collapsed'; ?>"
+                   data-bs-toggle="collapse"
+                   data-bs-target="#mailsmenu"
+                   aria-controls="mailsmenu"
+                   aria-expanded="<?php echo $is_mails_active ? 'true' : 'false'; ?>"
+                   aria-label="Toggle navigation">
+                    <span class="icon">
+                        <i class="lni lni-envelope"></i>
+                    </span>
+                    <span class="text">Mails</span>
+                </a>
+
+                <ul id="mailsmenu" class="collapse dropdown-nav <?php echo $is_mails_active ? 'show' : ''; ?>">
+                    <li>
+                        <a href="../mails/inbox.php">Inbox</a>
+                    </li>
+                    <li>
+                        <a href="../mails/sent.php">Sent</a>
+                    </li>
+                    <li>
+                        <a href="../mails/compose.mail.php">Compose Mail</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </nav>
 </aside>
