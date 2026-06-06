@@ -368,7 +368,7 @@ $hasSubmission = $hasText || $hasFile;
             <!-- LEFT COLUMN -->
             <div>
                 <!-- DESCRIPTION -->
-                <div class="card">
+                <div class="card" id="task-submission">
                     <div class="card-title">
                         <i class="las la-file-alt"></i> Description
                     </div>
@@ -429,14 +429,13 @@ $hasSubmission = $hasText || $hasFile;
                                 </div>
                             <?php } ?>
 
-                            <?php if (!empty($task['task_submit'])) { ?>
+                            <div class="mt-3">
 
-                                <div class="mt-3">
+                                <strong>Submission Actions:</strong>
 
-                                    <strong>Attachment Actions:</strong>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
 
-                                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-
+                                    <?php if (!empty($task['task_submit'])) { ?>
                                         <!-- VIEW BUTTON -->
                                         <a href="../../uploads/submissions/<?php echo $task['task_submit']; ?>" target="_blank"
                                             class="btn btn-success">
@@ -446,22 +445,21 @@ $hasSubmission = $hasText || $hasFile;
                                             View Attachment
 
                                         </a>
+                                    <?php } ?>
 
-                                        <!-- DELETE BUTTON -->
-                                        <a href="ctrlData/ctrl.delete.submission.php?id=<?php echo $task_id; ?>"
-                                            class="btn btn-danger" onclick="return confirm('Delete submission?')">
+                                    <!-- DELETE BUTTON -->
+                                    <a href="ctrlData/ctrl.delete.submission.php?id=<?php echo $task_id; ?>"
+                                        class="btn btn-danger" onclick="return confirm('Delete submission?')">
 
-                                            <i class="las la-trash"></i>
+                                        <i class="las la-trash"></i>
 
-                                            Delete Submission
+                                        Delete Submission
 
-                                        </a>
-
-                                    </div>
+                                    </a>
 
                                 </div>
 
-                            <?php } ?>
+                            </div>
 
                         <?php } ?>
 
@@ -491,6 +489,8 @@ $hasSubmission = $hasText || $hasFile;
 
                                 </a>
                             <?php } ?>
+
+                           
 
                             <div class="mt-2">
                                 <strong>Submitted By:</strong>
